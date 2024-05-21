@@ -6,11 +6,11 @@ _"Every Assistant has a Manager"_
 
 ![Setup Manager Logo](https://img.shields.io/badge/macOS-12%2B-success)
 
-Please report issues, feature requests [as an issue.](https://github.com/setup-manager/setup-manager/issues)
+Please report issues, feature requests [as an issue.](/issues)
 
-We have opened the [discussions](https://github.com/setup-manager/setup-manager/discussions) area for questions and more generic feedback.
+We have opened the [discussions](/discussions) area for questions and more generic feedback.
 
-Updates will be published in the '[Releases](https://github.com/setup-manager/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/setup-manager/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above. 
+Updates will be published in the '[Releases](/releases)' section of the repo. There you can also [download the latest pkg installer](/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above. 
 
 ## What it does
 
@@ -87,4 +87,4 @@ When you hold the option key when clicking on "About This Mac…" you will see m
 
 
 
-Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/setup-manager/setup-manager/issues)
+Please report issues, feature requests, and feedback (positive and negative) [as an issue.](/issues)
