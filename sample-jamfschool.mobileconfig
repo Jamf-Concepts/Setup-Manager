@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadContent</key>
+			<dict>
+				<key>com.jamf.setupmanager</key>
+				<dict>
+					<key>Forced</key>
+					<array>
+						<dict>
+							<key>mcx_preference_settings</key>
+							<dict>
+								<key>enrollmentActions</key>
+								<array>
+									<dict>
+										<key>arguments</key>
+										<array>
+											<string>-setTimeZone</string>
+											<string>Europe/Amsterdam</string>
+										</array>
+										<key>icon</key>
+										<string>symbol:clock</string>
+										<key>label</key>
+										<string>Set Time Zone</string>
+										<key>label.de</key>
+										<string>Zeitzone setzen</string>
+										<key>label.fr</key>
+										<string>Définir le fuseau horaire</string>
+										<key>label.nl</key>
+										<string>Tijdzone instellen</string>
+										<key>requiresRoot</key>
+										<true/>
+										<key>shell</key>
+										<string>/usr/sbin/systemsetup</string>
+									</dict>
+									<dict>
+										<key>arguments</key>
+										<array>
+											<string>--install-rosetta</string>
+											<string>--agree-to-license</string>
+										</array>
+										<key>icon</key>
+										<string>symbol:cpu</string>
+										<key>label</key>
+										<string>Install Rosetta</string>
+										<key>label.de</key>
+										<string>Rosetta installieren</string>
+										<key>label.fr</key>
+										<string>Installer Rosetta</string>
+										<key>label.nl</key>
+										<string>Rosetta installeren</string>
+										<key>requiresRoot</key>
+										<true/>
+										<key>shell</key>
+										<string>/usr/sbin/softwareupdate</string>
+									</dict>
+									<dict>
+										<key>icon</key>
+										<string>https://ics.services.jamfcloud.com/icon/hash_d72c39716b456bb647a1cfe01942656bd25dfcdd0faaa147dcce337589b75a8a</string>
+										<key>installomator</key>
+										<string>bbedit</string>
+										<key>label</key>
+										<string>BBEdit</string>
+									</dict>
+									<dict>
+										<key>icon</key>
+										<string>https://ics.services.jamfcloud.com/icon/hash_87d2224fa990a47de96f63fb2f84aa3b7304c20a3ff29412f5a7a484745fd2c9</string>
+										<key>installomator</key>
+										<string>googlechromepkg</string>
+										<key>label</key>
+										<string>Google Chrome</string>
+									</dict>
+								</array>
+								<key>icon</key>
+								<string>name:AppIcon</string>
+								<key>message</key>
+								<string>Setup Manager is configuring your Mac…</string>
+								<key>message.de</key>
+								<string>Setup Manager konfiguriert deinen Mac…</string>
+								<key>message.fr</key>
+								<string>Setup Manager configure votre Mac…</string>
+								<key>message.nl</key>
+								<string>Setup Manager configureert je Mac…</string>
+								<key>title</key>
+								<string>Welcome!</string>
+								<key>title.de</key>
+								<string>Willkommen!</string>
+								<key>title.fr</key>
+								<string>Bienvenu!</string>
+								<key>title.nl</key>
+								<string>Welkom!</string>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>Custom Settings</string>
+			<key>PayloadIdentifier</key>
+			<string>4FA5FEAD-6868-450F-A00B-09A7628F9420</string>
+			<key>PayloadOrganization</key>
+			<string>Jamf Setup Manager</string>
+			<key>PayloadType</key>
+			<string>com.apple.ManagedClient.preferences</string>
+			<key>PayloadUUID</key>
+			<string>4FA5FEAD-6868-450F-A00B-09A7628F9420</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string></string>
+	<key>PayloadDisplayName</key>
+	<string>Setup Manager</string>
+	<key>PayloadEnabled</key>
+	<true/>
+	<key>PayloadIdentifier</key>
+	<string>316D8E1F-7D42-49F9-A28B-4625D46469E7</string>
+	<key>PayloadOrganization</key>
+	<string>Armin Briegel</string>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>316D8E1F-7D42-49F9-A28B-4625D46469E7</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>
