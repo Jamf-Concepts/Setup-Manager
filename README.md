@@ -87,4 +87,4 @@ When you hold the option key when clicking on "About This Mac…" you will see m
 
 
 
-Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/Jamf-Concepts/Setup-Manager/issues)
+Please report issues, feature requests, and feedback (positive and constructive) in an issue or conversation in [the github repo](https://github.com/Jamf-Concepts/Setup-Manager).
