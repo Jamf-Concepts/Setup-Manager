@@ -6,11 +6,11 @@ _"Every Assistant has a Manager"_
 
 ![Setup Manager Logo](https://img.shields.io/badge/macOS-12%2B-success)
 
-Please report issues, feature requests [as an issue.](https://github.com/setup-manager/setup-manager/issues)
+Please report issues, feature requests [as an issue.](https://github.com/jamf-concepts/setup-manager/issues)
 
-We have opened the [discussions](https://github.com/setup-manager/setup-manager/discussions) area for questions and more generic feedback.
+We have opened the [discussions](https://github.com/jamf-concepts/setup-manager/discussions) area for questions and more generic feedback.
 
-Updates will be published in the '[Releases](https://github.com/setup-manager/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/setup-manager/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above. 
+Updates will be published in the '[Releases](https://github.com/jamf-concepts/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/jamf-concepts/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above. 
 
 ## What it does
 
@@ -59,7 +59,11 @@ Setup Manager requires macOS 12.0.0 or higher. It will work only with Jamf Pro o
 ### Known Issues
 
 - Setup Manager will **_not_** launch with Auto-Advance enabled
-- Setup Manager may **_not_** launch when you disable _all_ Setup Assistant screens
+- Setup Manager may **_not_** launch or launch and quit quickly when you disable _all_ Setup Assistant screens
+- Policies that are triggered by `enrollmentComplete` may disrupt Setup Manager running from Prestage/Automated Device Enrollment. To avoid this, disable or unscope policies triggered by `enrollmentComplete` on devices using Setup Manager.
+- In some deployments, Setup Manager attempts to start while Jamf is still installing. Try adding a 30-60 second `wait` action as the first action. We are working on a solution.
+- SVG and PDF files don't work with download URLs. workaround: convert files to PNG or use local SVG or PDf files instead.
+- With Jamf School, there will a few seconds after the remote management dialog where Setup Assistant shows before Setup Manager launches. With the Jamf School enrollment architecture, this is unavoidable.
 
 ### Quit
 

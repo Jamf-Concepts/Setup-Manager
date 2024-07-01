@@ -196,6 +196,33 @@ This will set the computer name to `Mac-ABC123` where `ABC123` is the last six c
 
 When set, the "About this Mac" info window will show this value instead of the real serial number. This is useful when making screen shots or recordings for documentation or presentations where you do not want to expose real serial numbers.
 
+#### `hideActionLabels`
+
+(Bool, default: `false`)
+
+Hides the individual labels under each action's icon.
+
+Example:
+
+```
+<key>hideActionLabels</key>
+<true/>
+``` 
+
+#### `hideDebugLabel`
+
+(Bool, default: `false`)
+
+When set, suppresses display of the red 'DEBUG' label in debug mode. Useful for screenshots and recordings.
+
+Example:
+
+```
+	<key>hideDebugLabel</key>
+	<true/>
+```
+
+
 ## Actions
 
 All actions should have these keys:
