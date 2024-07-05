@@ -1,4 +1,4 @@
-#  Single Touch workflow with Jamf Pro and Jamf Connect
+# Single Touch workflow with Jamf Pro and Jamf Connect
 
 ## What is Single Touch?
 
@@ -8,7 +8,7 @@ A single touch workflow can be as easy the tech unpacking the Mac (erasing it wi
 
 You can use a combination of Jamf Pro, Setup Manager and Jamf Connector, to get a tighter deployment, user assignment and account creation process. This requires a bit more setup and configuration. This workflow allows the tech to monitor the Setup Manager workflow, enter device specific data such as an asset tag and assign _and lock_ the device to a different user, without requiring the end user's login credentials.
 
-## What you need:
+## What you need
 
 - Jamf Pro
 - Setup Manager
@@ -28,8 +28,7 @@ Setup Manager profile will require a `userEntry` field for `userID` to know whic
 
 Example:
 
-
-```
+```xml
 <key>userID</key>
 <dict>
   <key>placeholder</key>
@@ -56,7 +55,7 @@ When you upload the Jamf Connect pkg to Jamf Pro and add it to either the Presta
 
 When you use Jamf App Installers you have no direct control over when the installation actually occurs. You should add a `watchPath` action at the end of your `enrollmentActions` array in the Setup Manager profile to ensure that Jamf Connect is installed before proceeding:
 
-```
+```xml
 <dict>
   <key>label</key>
   <string>Jamf Connect</string>
@@ -75,7 +74,7 @@ The email entered for userID will be submitted to Jamf Pro at the end of the Set
 
 Create an Extension attribute named "Setup Manager Done" with the script code:
 
-```
+```sh
 if [ -f "/private/var/db/.JamfSetupEnrollmentDone" ]; then
   echo "<result>done</result>"
 else
@@ -89,15 +88,15 @@ Then create a Smart Group named "Setup Manager Done" with the criteria `"Setup M
 
 Jamf Connect Login allows pre-configuring the user. Create a configuration profile named "Jamf Connect Enrollment User" to the preference domain `com.jamf.connect.login` with the following property list:
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>EnrollmentRealName</key>
-	<string>$REALNAME</string>
-	<key>EnrollmentUserName</key>
-	<string>$EMAIL</string>
+  <key>EnrollmentRealName</key>
+  <string>$REALNAME</string>
+  <key>EnrollmentUserName</key>
+  <string>$EMAIL</string>
 </dict>
 </plist>
 ```
@@ -105,4 +104,3 @@ Jamf Connect Login allows pre-configuring the user. Create a configuration profi
 Scope this configuration profile the "Setup Manager Done" smart group you created earlier.
 
 With this setup, the configuration profile that presets the user in Jamf Connect Login will be pushed out after Setup Manager finishes its final recon, which sets the user information to the Mac in Jamf Pro.
-

@@ -69,8 +69,8 @@
 - main `icon` now properly displays wide aspect images
 - watchPath actions time faster in DEBUG mode
 - unloads Jamf Pro background check-in during workflow
-- About this Mac… 
-  - downloand speed (measured with `networkQuality`) and esitmated download time
+- About this Mac…
+  - Download speed (measured with `networkQuality`) and estimated download time
   - Jamf Pro version
 - new preference keys (see [config profile documentation for details](ConfigurationProfile.md))
   - `accentColor`
@@ -92,7 +92,7 @@
 - added macOS Sonoma to list of known macOS releases
 - added documentation for Jamf School
 - added changelog and some more updates to documentation
-- computer name can now be generated wihtout UI from a template
+- computer name can now be generated without UI from a template
 - added slight scale animation and edge fade to action list
 - user entry fields can now be validated with a regular expression and localized message
 - battery widget now display correctly on Macs without a battery

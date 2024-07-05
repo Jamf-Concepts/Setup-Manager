@@ -1,6 +1,6 @@
 ![Setup Manager Icon](Images/SetupManager250.png)
 
-#  Setup Manager
+# Setup Manager
 
 _"Every Assistant has a Manager"_
 
@@ -10,7 +10,7 @@ Please report issues, feature requests [as an issue.](https://github.com/jamf-co
 
 We have opened the [discussions](https://github.com/jamf-concepts/setup-manager/discussions) area for questions and more generic feedback.
 
-Updates will be published in the '[Releases](https://github.com/jamf-concepts/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/jamf-concepts/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above. 
+Updates will be published in the '[Releases](https://github.com/jamf-concepts/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/jamf-concepts/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above.
 
 ## What it does
 
@@ -19,6 +19,7 @@ There are many enrollment progress tools available for Mac admins, each with the
 Setup Manager offers many of the same features of these utilities but is especially useful for the case where an IT department or provisioning depot wants to ensure that a new Mac is properly configured and assigned before sending the device to its new user. It runs over Setup Assistant before a user is created so it won't interfere with MDM-capable user or the secure token flow for FileVault. You can control which policies and installations Setup Manager runs with a configuration profile.
 
 Setup Manager provides:
+
 - a nice modern UI
 - configuration with a configuration profile, no need to modify shell scripts or json
 - works with different deployment workflows
@@ -77,7 +78,7 @@ While it is running you can open a log window with command-L.
 
 ### Flag file
 
-Setup Manager creates a flag file at `/private/var/db/.JamfSetupEnrollmentDone` when it finishes. If this file exists when Setup Manager launches, the app will terminate immediately and withour taking any action. You can use this flag file in an extension attribute in Jamf to determine whether the enrollment steps were performed. (Setup Manager does not care if the actions were performed successfully.)
+Setup Manager creates a flag file at `/private/var/db/.JamfSetupEnrollmentDone` when it finishes. If this file exists when Setup Manager launches, the app will terminate immediately and without taking any action. You can use this flag file in an extension attribute in Jamf to determine whether the enrollment steps were performed. (Setup Manager does not care if the actions were performed successfully.)
 
 When DEBUG is set to YES in the defaults/configuration profile, the flag file is ignored at launch, but still created when done.
 
@@ -89,6 +90,6 @@ When the app is not running as root (for testing or from Xcode) or when the `DEB
 
 When you hold the option key when clicking on "About This Mac…" you will see more information.
 
-
+---
 
 Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/setup-manager/setup-manager/issues)
