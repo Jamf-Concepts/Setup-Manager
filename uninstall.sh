@@ -24,7 +24,7 @@ bundleID="com.jamf.setupmanager"
 
 appPath="/Applications/Utilities/${appName}.app"
 
-if [ $(whoami) != "root" ]; then
+if [ "$(whoami)" != "root" ]; then
     echo "needs to run as root!"
     exit 1
 fi
@@ -35,7 +35,7 @@ if launchctl list | grep -q "$bundleID" ; then
 fi
 
 echo "removing files"
-rm -rfv /Applications/Utilities/"$appName".app
+rm -rfv "$appPath"
 rm -v /Library/LaunchDaemons/"$bundleID".plist
 
 pkgutil --forget "$bundleID"
