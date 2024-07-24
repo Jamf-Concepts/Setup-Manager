@@ -125,7 +125,9 @@ Example:
 <true/>
 ```
 
-#### `totalDownloadBytes` : (Integer, optional, default: 1000000000 or 1GB, v0.8)
+#### `totalDownloadBytes`
+
+(Integer, optional, default: 1000000000 or 1GB, v0.8)
 
 Use this value to provide an estimate for the total size of all items that will be downloaded. Setup Manager will display and estimated download time for this sum in the "About this Mac..." popup window.
 
