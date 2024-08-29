@@ -12,6 +12,8 @@ We have opened the [discussions](https://github.com/jamf-concepts/setup-manager/
 
 Updates will be published in the '[Releases](https://github.com/jamf-concepts/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/jamf-concepts/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above.
 
+We also recommend to join the [`#jamf-setup-manager`](https://macadmins.slack.com/archives/C078DDLKRDW) channel on the [MacAdmins Slack](https://macadmins.org).
+
 ## What it does
 
 There are many enrollment progress tools available for Mac admins, each with their own strengths. Jamf Setup Manager approaches the problem from the perspective of an IT service provider.
@@ -92,4 +94,4 @@ When you hold the option key when clicking on "About This Mac…" you will see m
 
 ---
 
-Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/setup-manager/setup-manager/issues)
+Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/Jamf-Concepts/setup-manager/issues)
