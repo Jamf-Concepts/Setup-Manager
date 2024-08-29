@@ -12,7 +12,7 @@ We have opened the [discussions](https://github.com/jamf-concepts/setup-manager/
 
 Updates will be published in the '[Releases](https://github.com/jamf-concepts/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/jamf-concepts/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above.
 
-We also recommend to join the [`#jamf-setup-manager`](https://macadmins.slack.com/archives/C078DDLKRDW) channel on the [MacAdmins Slack](https://macadmins.org).
+There is also a [`#jamf-setup-manager`](https://macadmins.slack.com/archives/C078DDLKRDW) channel on the [MacAdmins Slack](https://macadmins.org).
 
 ## What it does
 
