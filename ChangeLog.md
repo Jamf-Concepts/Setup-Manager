@@ -1,5 +1,30 @@
 #  Setup Manager - Change Log
 
+## v1.1beta
+(2024-09-09)
+
+### New Features
+
+- new action [`waitForUserEntry`](ConfigurationProfile.md#waitforuserentry) which allows for two-phase installation workflows in Jamf Pro. When Setup Manager reaches this action it will wait for the user entry to save the data entry, then it will run a recon/Update Inventory. Policy actions that follow this, can then be scoped to data from the user entry. (#11)
+- Setup Manager can now run over Login Window, instead of immediately after installation. This also allows Setup Manager to work with AutoAdvance. Use the new `runAt` key in the profile to determine when Setup Manager runs (#18)
+- data from user entry, is now written to a file when Setup Manager submits data. See details in [User Entry](Extras.md#user-data-file) (#9)
+- use token substitution in the `title`, `message`, and action `label` values (as well as `computerNameTemplate`)
+- token substitution can extract center characters with `:=n`
+- localization in the configuration profile has been simplified. The previous method still works, but is considered deprecated. [Details](ConfigurationProfile.md#localization)
+
+### Fixes and improvements
+
+- icons using `symbol:` that end in `.app` now work properly
+- Elapsed time is shown in "About this Mac…" Start time is shown with option key
+- svg and pdf images used for `icon`s should now work
+- general fixes in user entry setup
+- improved rendering in Help View (#12)
+- fixes to json schema
+- improved and updated documentation
+- included Installomator script updated to [v10.6](https://github.com/Installomator/Installomator/releases/v10.6)
+- added Setup Manager version and macOS version and build to tracking ping
+- fixed UI glitch in macOS Sequoia
+
 ## v1.0
 (2024-07-01)
 
