@@ -1,6 +1,6 @@
 # Configuration Profile format
 
-The project includes a [custom profile plist](sample-com.jamf.setupmanager.plist) for Jamf Pro and [an example configuration profile](sample-jamfschool.mobileconfig) for Jamf School.
+The project includes a [custom profile plist](sample-com.jamf.setupmanager.plist) for Jamf Pro and [an example configuration profile](sample-jamfschool.mobileconfig) for Jamf School. 
 
 ## Top-level keys
 
@@ -10,8 +10,7 @@ The project includes a [custom profile plist](sample-com.jamf.setupmanager.plist
 
 When this is set to `true` any steps that actually change software on the disk will not be performed.
 
-These behaviors change in debug mode:
-
+These behaviors change in debug mode: 
 - checks for the existence of the Jamf binary and keychain are skipped
 - Jamf Setup manager will accept enrollmentActions from a non-managed preference file
 - `policy`, `recon`, and `shell` actions that require root are replaced with a 10 second delay (and will always complete successfully)
@@ -21,13 +20,13 @@ When in debug mode, you have to set the `simulateMDM` preference key to `Jamf Pr
 
 #### `title`
 
-(String, default: `Welcome to Setup Manager`, localized)
+(String, default: `Welcome to Setup Manager`, localized, substitutions)
 
 The main title over the window.
 
 Example:
 
-```xml
+```
 <key>title</key>
 <string>Welcome to your new Mac!</string>
 ```
@@ -40,22 +39,37 @@ The icon shown at the top center of the window. There are many options to define
 
 #### `message`
 
-(String, default: `Setup Manager is configuring your Mac…`, localized)
+(String, default: `Setup Manager is configuring your Mac…`, localized, substitutions)
 
 The message shown below the title.
 
 Example:
 
-```xml
+```
 <key>message</key>
 <string>Please wait a few moments while we install essential software…</string>
+```
+
+The message can use [substitutions](#substitutions).
+
+Example:
+
+```
+<key>message</key>
+<string>Preparing your new %model%. Please be patient.</string>
 ```
 
 #### `background`
 
 (String, optional, localized)
 
-When this key is set, Setup Manager treats it as an image/[icon source](#icon-sources) and displays the image in a screen covering background.
+When this key is set, Setup Manager treats it as an image/[icon source](#icon-source) and displays the image in a screen covering background.
+
+#### `runAt`
+
+(String, optional, deafult; `enrollment`)
+
+This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without AutoAdvance) and user-initiated enrollment. When the `runAt` value is set to `loginwindow` Setup Manager will launch when the login window is shown. This is useful for fully automated enrollments with AutoAdvance. A setting of `loginwindow` will only with enrollment setups that eventually end on the login window (i.e. a user has to be created automatically or the device is bound to a directory).
 
 #### `enrollmentActions`
 
@@ -89,12 +103,12 @@ This key changes the duration (in seconds) of the "final countdown" before the a
 
 Examples:
 
-```xml
+```
 <key>finalCountdown</key>
 <integer>30</integer>
 ```
 
-```xml
+```
 <key>finalCountdown</key>
 <integer>-1</integer>
 ```
@@ -107,7 +121,7 @@ This key sets the action and label for the button shown when Setup Manger has co
 
 Example:
 
-```xml
+```
 <key>finalAction</key>
 <string>shutdown</string>
 ```
@@ -118,22 +132,24 @@ Example:
 
 This key determines whether both the 'Shutdown' and 'Continue' are shown or just the button set in the `finalAction` key.
 
+**Warning:** this key will be removed in a future version of Setup Manager
+
 Example:
 
-```xml
+```
 <key>showBothButtons</key>
 <true/>
 ```
 
 #### `totalDownloadBytes`
 
-(Integer, optional, default: 1000000000 or 1GB, v0.8)
+(Integer, opitonal, default: 1000000000 or 1GB, v0.8)
 
 Use this value to provide an estimate for the total size of all items that will be downloaded. Setup Manager will display and estimated download time for this sum in the "About this Mac..." popup window.
 
 Example:
 
-```xml
+```
 <key>totalDownloadBytes</key>
 <integer>4500000000</integer>
 ```
@@ -146,7 +162,7 @@ Set this to `$JSSID` in the configuration profile and Setup Manager will be awar
 
 Example:
 
-```xml
+```
 <key>jssID</key>
 <string>$JSSID</string>
 ```
@@ -159,39 +175,27 @@ Set this to `$EMAIL` in the configuration profile. This communicates the user wh
 
 Example:
 
-```xml
+```
 <key>userID</key>
 <string>$EMAIL</string>
 ```
 
 #### `computerNameTemplate`
 
-(String, Jamf Pro only)
+(String, Jamf Pro only, substitutions)
 
 When this key is set, Setup Manager will generate the computer name from this template and set it. When this key is present, a `computerName` dict or string in `userEntry` will be ignored.
 
-The template uses tokens, which begin and end with `%` character. The tokens will be replaced with data from the device or from user entry. For example, in the template `Mac-%serial%` the `%serial%` token will be replaced with the computer's serial number. (A double `%%` will be substituted with a single `%`, in case you need to represent this symbol in the computer name.)
-
-The following tokens are available:
-
-- `serial`: the computer's serial number
-- `udid`: the computer's provisioning udid
-- `model`: the computer's model name, e.g. `MacBook Air` or `Mac mini`
-- `model-short`: the first word of `model` (no spaces), i.e. `MacBook`, `Mac` or `iMac`
-- these values from user entry: `email`, `assetTag`, `building`, `department`, `room`
-
-If the value for a token cannot be retrieved or is empty, it will be substituted with `%%%` (three percentage signs).
-
-You can add a `:n` (where `n` is an integer number) to a token. This will substitute only the first `n` characters of the string. For example `%serial:5%` will be substituted with the first 5 characters of the serial number. When `n` is negative, it will substitute the _last_ `n` characters. For example, `%udid:-8%` will substitute the last eight characters of the udid.
+The template uses substitution tokens, which begin and end with `%` character which will be substituted with data at run time. See [Substitutions](#substitutions) for details.
 
 Example:
 
-```xml
+```
 <key>computerNameTemplate</key>
-<string>Mac-%serial:-6%</string>
+<string>Mac-%serial:=6%</string>
 ```
 
-This will set the computer name to `Mac-ABC123` where `ABC123` is the last six characters of the serial number
+This will set the computer name to `Mac-DEF456` where `DEF456` are the center six characters of the serial number 
 
 #### `overrideSerialNumber`
 
@@ -207,10 +211,10 @@ Hides the individual labels under each action's icon.
 
 Example:
 
-```xml
+```
 <key>hideActionLabels</key>
 <true/>
-```
+``` 
 
 #### `hideDebugLabel`
 
@@ -220,10 +224,11 @@ When set, suppresses display of the red 'DEBUG' label in debug mode. Useful for 
 
 Example:
 
-```xml
+```
 <key>hideDebugLabel</key>
 <true/>
 ```
+
 
 ## Actions
 
@@ -231,7 +236,7 @@ All actions should have these keys:
 
 #### `label`
 
-(String, required, localized)
+(String, required, localized, substitutions)
 
 The label is used as the name of the action in display.
 
@@ -265,7 +270,7 @@ When this key is set to `true` Setup Manager will only run this when itself is r
 
 Example:
 
-```xml
+```
 <dict>
   <key>label</key>
   <string>Set Time Zone</string>
@@ -295,7 +300,7 @@ This will run the jamf policy or polices with the given trigger name. This is th
 
 Example:
 
-```xml
+```
 <dict>
   <key>label</key>
   <string>BBEdit</string>
@@ -328,7 +333,7 @@ The action will fail after this timeout.
 
 Example:
 
-```xml
+```
 <dict>
   <key>label</key>
   <string>Jamf Protect</string>
@@ -337,7 +342,7 @@ Example:
   <key>watchPath</key>
   <string>/Applications/JamfProtect.app</string>
   <key>wait</key>
-  <integer>300</integer>
+	<integer>300</integer>
 </dict>
 ```
 
@@ -353,12 +358,35 @@ Wait for a given time. Use this to let the system catch up with previous install
 
 Example:
 
-```xml
+```
 <dict>
   <key>label</key>
   <string>Waiting…</string>
   <key>wait</key>
   <integer>20</integer>
+</dict>
+```
+
+### Wait for User Entry
+
+#### `waitForUserEntry`
+
+(String, value is ignored)
+
+When Setup Manager reaches this action before the user entry has been completed, it will wait until the user entry is completed and the user has clicked 'Save.'
+
+When the user entry is saved, this action will set the computer name, according to the `computerNameTemplate` or what was entered by the user and run a recon/Update Inventory which submits the user data.
+
+This action allows for "two phase" installation workflows where the policies in the second phase are scoped to data from the user entry. After this action, smart groups in Jamf Pro should reflect the data entered and you can use scoping in subsequent policies to choose which policies should or should not run on this device.
+
+Regardless of whether there is a `waitForUserEntry` action or not, Setup Manager will submit the user data and run a recon/Update Inventory after all actions are finished.
+
+```xml
+<dict>
+  <key>label</key>
+  <string>Wait for User Entry</string>
+  <key>waitForUserEntry</key>
+  <string/>
 </dict>
 ```
 
@@ -374,7 +402,7 @@ You should usually not need to add a recon step. By default Setup Manager will a
 
 Example:
 
-```xml
+```
 <dict>
   <key>recon</key>
   <string/>
@@ -383,9 +411,9 @@ Example:
 
 ### Installomator
 
-This will run Installomator to install a given label.
+This will run [Installomator](https://github.com/Installomator/Installomator) to install a given label.
 
-Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notifications. You can override this in the `arguments`.
+Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notfications. You can override this in the `arguments`.
 
 #### `installomator`
 
@@ -401,7 +429,7 @@ List of additional arguments passed into Installomator.
 
 Example:
 
-```xml
+```
 <dict>
   <key>label</key>
   <string>Google Chrome</string>
@@ -412,6 +440,7 @@ Example:
 </dict>
 ```
 
+
 ## Icon Sources
 
 Icons can be defined in several ways in Setup Manager. These different approaches for the top-level `icon` and `background` key, as well as the `icon` key in an action.
@@ -420,7 +449,7 @@ Icons can be defined in several ways in Setup Manager. These different approache
 
 When the icon source string starts with `http` or `https`, Setup Manager will attempt to download a file from that URL and interpret it as an image file. It will show a spinning progress view while downloading.
 
-```xml
+```
 <key>icon</key>
 <string>https://example.com/path/to/icon.png</string>
 ```
@@ -429,36 +458,36 @@ When the icon source string starts with `http` or `https`, Setup Manager will at
 
 When the icon source is an absolute file path, Setup Manager will attempt to read that file as an image file and display it.
 
-```xml
+```
 <key>icon</key>
 <string>/Library/Organization/image.png</string>
 ```
 
-### Application
+### Application:
 
 When the icon source is an absolute file path that ends in `.app`, Setup Manager will get the icon from that app.
 
-```xml
+```
 <key>icon</key>
 <string>/System/Applications/App Store.app</string>
 ```
 
-### Name
+### Name:
 
 When the icon source starts with `name:`, Setup Manager will get the icon with that name. Two names are useful: `AppIcon` gets Setup Manager's app icon and `NSComputer` will get an icon representing the current hardware.
 
-```xml
+```
 <key>icon</key>
 <string>name:AppIcon</string>
 ```
 
-### SF Symbols
+### SF Symbols:
 
-When the icon source starts with `symbol:`, Setup Manager will create the icon using that symbols name. You can look up symbol names using the [SF Symbols app](https://developer.apple.com/sf-symbols/).
+When the icon source starts with `symbol:`, Setup Manager will create the icon using that symbols name. You can look up symbol names using the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
 
 Note that the availability of SF Symbols will vary with the OS version and that some SF Symbols may look different in different localizations.
 
-```xml
+```
 <key>icon</key>
 <string>symbol:clock</string>
 ```
@@ -476,6 +505,10 @@ You can enable user entry for the following keys:
 
 Any of the fields will only be shown when its key exists. If you were to create an empty `userEntry` dict, you get an empty user input screen with a 'Save' button - not a good user experience.
 
+### User Data file
+
+Data from user entry is written, together with some other data to a file when Setup Manager reaches a `waitForUserEntry` action and again when it finishes. The file is stored at `/private/var/db/SetupManagerUserData.txt`. [More details.](Extras.md#user-data-file)
+
 #### `default`
 
 (String, localized)
@@ -484,7 +517,7 @@ You provide a default value in two ways:
 
 Example:
 
-```xml
+```
 <key>computerName</key>
 <string>Mac-12345</string>
 ```
@@ -495,25 +528,16 @@ When you want to configure other options of the field, you need to use the `dict
 
 Example:
 
-```xml
+```
 <key>computerName</key>
 <dict>
   <key>default</key>
   <string>ABC12345</string>
+  <key>validation</key>
+  <string>[A-Z]{3}\d{5}</string>
 </dict>
 ```
 
-With the second, longer form you can have different default values per [localization](#localization).
-
-```xml
-<key>computerName</key>
-<dict>
-  <key>default</key>
-  <string>Device-12345</string>
-  <key>default.de</key>
-  <string>Gerät-12345</string>
-</dict>
-```
 
 #### `placeholder`
 
@@ -521,7 +545,7 @@ With the second, longer form you can have different default values per [localiza
 
 This will show the string value given as a greyed out placeholder in the empty text field.
 
-```xml
+```
 <key>assetTag</key>
 <dict>
   <key>placeholder</key>
@@ -537,7 +561,7 @@ Note: a `default` value will prevent the placeholder from appearing, unless the 
 
 This will show a popup list of preset options:
 
-```xml
+```
 <key>department</key>
 <dict>
   <key>options</key>
@@ -570,7 +594,7 @@ Detailed description of the regular expression syntax: [NSRegularExpression](htt
 
 Example:
 
-```xml
+```
 <key>userID</key>
 <dict>
   <key>placeholder</key>
@@ -586,7 +610,7 @@ Example:
 
 The default validation message will show the regular expression the value is not matching. This is suitable for debugging but not at all user friendly. You really should provide a localized message explaining how the value can conform.
 
-```xml
+```
 <key>assetTag</key>
 <dict>
   <key>placeholder</key>
@@ -594,13 +618,16 @@ The default validation message will show the regular expression the value is not
   <key>validation</key>
   <string>[A-Z]{3}\d{5}</string>
   <key>validationMessage</key>
-  <string>Asset Tag needs to be of format 'ABC12345'</string>
-  <key>validationMessage.de</key>
-  <string>Etikett Nummer muss im Format 'ABC12345' sein</string>
-  <key>validationMessage.fr</key>
-  <string>L'étiquette d'actif doit être au format 'ABC12345'</string>
-  <key>validationMessage.nl</key>
-  <string>Asset Tag moet het formaat 'ABC12345' hebben</string>
+  <dict>
+    <key>en</key>
+    <string>Asset Tag needs to be of format 'ABC12345'</string>
+    <key>de</key>
+    <string>Etikett Nummer muss im Format 'ABC12345' sein</string>
+    <key>fr</key>
+    <string>L'étiquette d'actif doit être au format 'ABC12345'</string>
+    <key>nl</key>
+    <string>Asset Tag moet het formaat 'ABC12345' hebben</string>
+  </dict>
 </dict>
 ```
 
@@ -616,7 +643,7 @@ For this, you need to setup the top-level `userID` to receive the `$EMAIL` varia
 
 Example:
 
-```xml
+```
 <key>userEntry</key>
 <dict>
   <key>showForUserIDs</key>
@@ -649,7 +676,7 @@ When you provide a top-level `help` key with a dictionary a help button (with a 
 
 (String, optional, localized)
 
-#### `url`
+#### `url`: 
 
 (String, optional, localized)
 
@@ -657,7 +684,7 @@ The contents of the `url` key will be translated into a QR code and displayed ne
 
 Example:
 
-```xml
+```
 <key>help</key>
 <dict>
   <key>message</key>
@@ -673,22 +700,36 @@ Example:
 
 The app will pick up the user choice of the UI language for the interface elements. Right now it supports English, French, German, Italian, Spanish, and Dutch. The app will fall back to English for other language choices.
 
-You can provide localizations for the texts given in the configuration profile. You can do so by adding the two-letter language abbreviation (e.g. `de`, `fr`, or `nl`) to the key, separated with a `.` (dot or period character). The value of the key without a "language extension" is used for English and as a fallback value for other languages.
+You can provide localizations for the texts given in the configuration profile. 
 
-Example:
+**Note:** the method for providing localized texts in the configuration profile changed in version 1.1. The previous method will continue to work for the time being. Going forward, it is _strongly_ recommended to change to the new dictionary-based solution.
 
-```xml
+To provide a set of localizations for a value in the profile, change its type from `string` to `dict`. Inside the `dict`, provide a value for each localization for each localization with the language code as key.
+
+For example, this unlocalized key-value pair
+
+```
 <key>title</key>
 <string>Welcome!</string>
-<key>title.de</key>
-<string>Willkommen!</string>
-<key>title.fr</key>
-<string>Bienvenu!</string>
-<key>title.nl</key>
-<string>Welkom!</string>
+``` 
+
+is localized like this:
+
+```
+<key>title</key>
+<dict>
+  <key>en</key>
+  <string>Welcome!</string>
+  <key>de</key>
+  <string>Willkommen!</string>
+  <key>fr</key>
+  <string>Bienvenu!</string>
+  <key>nl</key>
+  <string>Welkom!</string>
+</dict>
 ```
 
-If you do not provide or have deleted a `title.de` key and value, the app will choose the value of the `title` key even when in the German setting.
+When there is no value for the localization, the app will fall back to the value of the `en` key.
 
 The following keys can be localized:
 
@@ -699,26 +740,61 @@ The following keys can be localized:
 - `icon`
 - `background`
 
-### Action keys
+### Actions
 
 - `label`
 - `icon`
 
-### User Entry keys
+### User Entry
 
 - `default`
 - `placeholder`
 - `validationMessage`
 
+### Help
+
+- `title`
+- `message`
+- `url`
+
 Use these two-letter codes for these languages:
 
 | Language           | two-letter code |
-| ------------------ | --------------- |
-| Dutch (Nederlands) | nl              |
+|--------------------|-----------------|
 | English            | en (default)    |
+| Dutch (Nederlands) | nl              |
 | French             | fr              |
 | German             | de              |
 | Italian            | it              |
 | Norwegian          | nb              |
 | Spanish            | es              |
 | Swedish            | sv              |
+
+## Substitution
+
+Certain keys, such as `computerNameTemplate` can use tokens, which begin and end with `%` character. The tokens will be substituted with data from the device or from user entry. For example, in the template `Mac-%serial%` the `%serial%` token will be replaced with the computer's serial number. (A double `%%` will be substituted with a single `%`, in case you need to represent this symbol in the computer name.)
+
+The following tokens are available:
+
+- `serial`: the computer's serial number
+- `udid`: the computer's provisioning udid
+- `model`: the computer's model name, e.g. `MacBook Air` or `Mac mini`
+- `model-short`: the first word of `model` (no spaces), i.e. `MacBook`, `Mac` or `iMac`
+- these values from user entry, _after_ user entry has completed 
+    - `email`
+    - `assetTag`
+    - `building`
+    - `department`
+    - `room`
+
+If the value for a token cannot be retrieved or is empty, it will be substituted with `%%%` (three percentage signs).
+
+You can add a `:n` (where `n` is an integer number) to a token. This will substitute only the first `n` characters of the string. For example `%serial:5%` will be substituted with the first 5 characters of the serial number. When `n` is negative, it will substitute the _last_ `n` characters. For example, `%udid:-8%` will substitute the last eight characters of the udid. When you use `:=n` the _center_ `n` characters will be picked.
+
+These keys can use substitutions:
+
+- `title`
+- `message`
+- `computerNameTemplate`
+- actions: `label`
+

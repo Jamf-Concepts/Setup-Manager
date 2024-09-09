@@ -13,17 +13,20 @@
 			<key>icon</key>
 			<string>symbol:clock</string>
 			<key>label</key>
-			<string>Set Time Zone</string>
-			<key>label.de</key>
-			<string>Zeitzone setzen</string>
-			<key>label.es</key>
-			<string>Establecer zona horaria</string>
-			<key>label.fr</key>
-			<string>Définir le fuseau horaire</string>
-			<key>label.it</key>
-			<string>Imposta il fuso orario</string>
-			<key>label.nl</key>
-			<string>Tijdzone instellen</string>
+			<dict>
+				<key>de</key>
+				<string>Zeitzone setzen</string>
+				<key>en</key>
+				<string>Set Time Zone</string>
+				<key>es</key>
+				<string>Establecer zona horaria</string>
+				<key>fr</key>
+				<string>Définir le fuseau horaire</string>
+				<key>it</key>
+				<string>Imposta il fuso orario</string>
+				<key>nl</key>
+				<string>Tijdzone instellen</string>
+			</dict>
 			<key>requiresRoot</key>
 			<true/>
 			<key>shell</key>
@@ -71,29 +74,35 @@
 	<key>jssID</key>
 	<string>$JSSID</string>
 	<key>message</key>
-	<string>Please be patient while Setup Manager configures your new Mac.</string>
-	<key>message.de</key>
-	<string>Bitte etwas Geduld während Setup Manager deinen neuen Mac konfiguriert.</string>
-	<key>message.es</key>
-	<string>Por favor espere mientras Setup Manager configura tu nuevo Mac.</string>
-	<key>message.fr</key>
-	<string>Veuillez être patient pendant que Setup Manager configure votre nouveau Mac.</string>
-	<key>message.it</key>
-	<string>Sii paziente mentre Setup Manager configura il tuo nuovo Mac.</string>
-	<key>message.nl</key>
-	<string>Even geduld terwijl Setup Manager je nieuwe Mac configureert.</string>
+	<dict>
+		<key>de</key>
+		<string>Bitte etwas Geduld während Setup Manager deinen neuen Mac konfiguriert.</string>
+		<key>en</key>
+		<string>Please be patient while Setup Manager configures your new Mac.</string>
+		<key>es</key>
+		<string>Por favor espere mientras Setup Manager configura tu nuevo Mac.</string>
+		<key>fr</key>
+		<string>Veuillez être patient pendant que Setup Manager configure votre nouveau Mac.</string>
+		<key>it</key>
+		<string>Sii paziente mentre Setup Manager configura il tuo nuovo Mac.</string>
+		<key>nl</key>
+		<string>Even geduld terwijl Setup Manager je nieuwe Mac configureert.</string>
+	</dict>
 	<key>title</key>
-	<string>Welcome!</string>
-	<key>title.de</key>
-	<string>Willkommen!</string>
-	<key>title.es</key>
-	<string>¡Bienvenido!</string>
-	<key>title.fr</key>
-	<string>Bienvenu!</string>
-	<key>title.it</key>
-	<string>Benvenuto!</string>
-	<key>title.nl</key>
-	<string>Welcom!</string>
+	<dict>
+		<key>de</key>
+		<string>Willkommen!</string>
+		<key>en</key>
+		<string>Welcome!</string>
+		<key>es</key>
+		<string>¡Bienvenido!</string>
+		<key>fr</key>
+		<string>Bienvenu!</string>
+		<key>it</key>
+		<string>Benvenuto!</string>
+		<key>nl</key>
+		<string>Welcom!</string>
+	</dict>
 	<key>userEntry</key>
 	<dict>
 		<key>assetTag</key>
@@ -115,11 +124,14 @@
 		<key>userID</key>
 		<dict>
 			<key>placeholder</key>
-			<string>first.last@example.com</string>
-			<key>placeholder.de</key>
-			<string>vorname.nachname@example.com</string>
-			<key>placeholder.nl</key>
-			<string>voornaam.achternaam@example.com</string>
+			<dict>
+				<key>de</key>
+				<string>vorname.nachname@example.com</string>
+				<key>en</key>
+				<string>first.last@example.com</string>
+				<key>nl</key>
+				<string>voornaam.achternaam@example.com</string>
+			</dict>
 		</dict>
 	</dict>
 </dict>

@@ -25,13 +25,16 @@
 										<key>icon</key>
 										<string>symbol:clock</string>
 										<key>label</key>
-										<string>Set Time Zone</string>
-										<key>label.de</key>
-										<string>Zeitzone setzen</string>
-										<key>label.fr</key>
-										<string>Définir le fuseau horaire</string>
-										<key>label.nl</key>
-										<string>Tijdzone instellen</string>
+										<dict>
+											<key>de</key>
+											<string>Zeitzone setzen</string>
+											<key>en</key>
+											<string>Set Time Zone</string>
+											<key>fr</key>
+											<string>Définir le fuseau horaire</string>
+											<key>nl</key>
+											<string>Tijdzone instellen</string>
+										</dict>
 										<key>requiresRoot</key>
 										<true/>
 										<key>shell</key>
@@ -46,13 +49,16 @@
 										<key>icon</key>
 										<string>symbol:cpu</string>
 										<key>label</key>
-										<string>Install Rosetta</string>
-										<key>label.de</key>
-										<string>Rosetta installieren</string>
-										<key>label.fr</key>
-										<string>Installer Rosetta</string>
-										<key>label.nl</key>
-										<string>Rosetta installeren</string>
+										<dict>
+											<key>de</key>
+											<string>Rosetta installieren</string>
+											<key>en</key>
+											<string>Install Rosetta</string>
+											<key>fr</key>
+											<string>Installer Rosetta</string>
+											<key>nl</key>
+											<string>Rosetta installeren</string>
+										</dict>
 										<key>requiresRoot</key>
 										<true/>
 										<key>shell</key>
@@ -78,21 +84,27 @@
 								<key>icon</key>
 								<string>name:AppIcon</string>
 								<key>message</key>
-								<string>Setup Manager is configuring your Mac…</string>
-								<key>message.de</key>
-								<string>Setup Manager konfiguriert deinen Mac…</string>
-								<key>message.fr</key>
-								<string>Setup Manager configure votre Mac…</string>
-								<key>message.nl</key>
-								<string>Setup Manager configureert je Mac…</string>
+								<dict>
+									<key>de</key>
+									<string>Setup Manager konfiguriert deinen Mac…</string>
+									<key>en</key>
+									<string>Setup Manager is configuring your Mac…</string>
+									<key>fr</key>
+									<string>Setup Manager configure votre Mac…</string>
+									<key>nl</key>
+									<string>Setup Manager configureert je Mac…</string>
+								</dict>
 								<key>title</key>
-								<string>Welcome!</string>
-								<key>title.de</key>
-								<string>Willkommen!</string>
-								<key>title.fr</key>
-								<string>Bienvenu!</string>
-								<key>title.nl</key>
-								<string>Welkom!</string>
+								<dict>
+									<key>de</key>
+									<string>Willkommen!</string>
+									<key>en</key>
+									<string>Welcome!</string>
+									<key>fr</key>
+									<string>Bienvenu!</string>
+									<key>nl</key>
+									<string>Welkom!</string>
+								</dict>
 							</dict>
 						</dict>
 					</array>

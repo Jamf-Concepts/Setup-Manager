@@ -14,6 +14,8 @@ Updates will be published in the '[Releases](https://github.com/jamf-concepts/se
 
 There is also a [`#jamf-setup-manager`](https://macadmins.slack.com/archives/C078DDLKRDW) channel on the [MacAdmins Slack](https://macadmins.org).
 
+![setup manager progress dialog](Images/setup-manager-progress-screenshot.png)
+
 ## What it does
 
 There are many enrollment progress tools available for Mac admins, each with their own strengths. Jamf Setup Manager approaches the problem from the perspective of an IT service provider.
@@ -28,70 +30,40 @@ Setup Manager provides:
   - zero-touch (user-driven)
   - single-touch (tech-driven)
   - user initiated enrollment
+  - handsfree deployment with auto advance
 - customized branding
 - localized interface and custom text
 - support for Jamf Pro and Jamf School
 
-![setup manager progress dialog](Images/setup-manager-progress-screenshot.png)
-
 ## Installation and Configuration
 
-### Jamf Pro
-
-1. Upload the Setup Manager installer pkg file to Jamf Pro
-2. Create a custom configuration profile with the preference domain `com.jamf.setupmanager`. See documentation for the profile contents [here](ConfigurationProfile.md).
-3. Scope the configuration profile to the computers
-4. Add the pkg and the configuration profile to the Prestage
-
-Setup Manager can be used for various zero-touch and tech-driven single-touch deployments with Jamf Pro and (optionally) Jamf Connect. One single-touch workflow with Jamf Connect where the tech can re-assign the Mac to a different end user [is described here](JamfProConnect-SingleTouch.md).
-
-### Jamf School
-
-[Setup with Jamf School](Setup-JamfSchool.md)
+- Jamf Pro
+  - [JamfPro-Quick Start](Docs/JamfPro-QuickStart.md)
+  - zero-touch and user-initiated deployments (forthcoming)
+  - [extra installations based on user data entry](Docs/JamfPro-TwoPhase.md)
+  - [Single-touch workflow with user re-assignment using Jamf Connect](Docs/JamfProConnect-SingleTouch.md)
+  - handsfree deployment with auto advance and Setup Manager at login window (forthcoming)
+- [Jamf School](Docs/JamfSchool-Setup.md)
+- [Extras and Notes](Extras.md)
+- [Frequently Asked Questions](FAQ.md)
 
 ## Configuration Profile
 
 The structure of the configuration profile [is documented here](ConfigurationProfile.md).
 
-## Notes
-
-### Requirements
+## Requirements
 
 Setup Manager requires macOS 12.0.0 or higher. It will work only with Jamf Pro or Jamf School.
 
-### Known Issues
+## Known Issues
 
-- Setup Manager will **_not_** launch with Auto-Advance enabled
-- Setup Manager may **_not_** launch or launch and quit quickly when you disable _all_ Setup Assistant screens
-- Policies that are triggered by `enrollmentComplete` may disrupt Setup Manager running from Prestage/Automated Device Enrollment. To avoid this, disable or unscope policies triggered by `enrollmentComplete` on devices using Setup Manager.
-- In some deployments, Setup Manager attempts to start while Jamf is still installing. Try adding a 30-60 second `wait` action as the first action. We are working on a solution.
-- SVG and PDF files don't work with download URLs. workaround: convert files to PNG or use local SVG or PDf files instead.
+- Setup Manager will **_not_** launch at enrollment with Auto-Advance enabled, use the option to run at login window
+- Setup Manager may **_not_** launch or launch and quit quickly when you disable _all_ Setup Assistant screens, leave at least one Setup Assistant option enabled
+- When you install **_Jamf Connect_** during the Prestage together with Setup Manager, you may see Setup Assistant for some time before Setup Manager launches or Setup Manager may not launch at all. Remove Jamf Connect from the Prestage and install it with Setup Manager policy or installomator action.
+- Policies that are triggered by `enrollmentComplete` may disrupt Setup Manager running from Prestage/Automated Device Enrollment. Disable or unscope policies triggered by `enrollmentComplete` on devices using Setup Manager.
+- In some deployments, Setup Manager attempts to start while Jamf Pro is still installing. Try adding a 30-60 second `wait` action as the first action. We are working on a solution.
 - With Jamf School, there will a few seconds after the remote management dialog where Setup Assistant shows before Setup Manager launches. With the Jamf School enrollment architecture, this is unavoidable.
-
-### Quit
-
-The command-Q keyboard short cut to quit the app is disabled. You can use shift-control-command-E instead. This should only be used when debugging as it may leave the client in an undetermined state when installations are aborted.
-
-### Logging
-
-Setup Manager logs to `/Library/Logs/Setup Manager.log`.
-
-While it is running you can open a log window with command-L.
-
-### Flag file
-
-Setup Manager creates a flag file at `/private/var/db/.JamfSetupEnrollmentDone` when it finishes. If this file exists when Setup Manager launches, the app will terminate immediately and without taking any action. You can use this flag file in an extension attribute in Jamf to determine whether the enrollment steps were performed. (Setup Manager does not care if the actions were performed successfully.)
-
-When DEBUG is set to YES in the defaults/configuration profile, the flag file is ignored at launch, but still created when done.
-
-### Final action and shutdown
-
-When the app is not running as root (for testing or from Xcode) or when the `DEBUG` preference is set, shutdown will merely quit.
-
-### "About This Mac…" window
-
-When you hold the option key when clicking on "About This Mac…" you will see more information.
 
 ---
 
-Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/Jamf-Concepts/setup-manager/issues)
+Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/Jamf-Concepts/Setup-Manager/issues)
