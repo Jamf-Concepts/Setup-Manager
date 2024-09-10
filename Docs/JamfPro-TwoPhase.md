@@ -47,7 +47,6 @@ Setup Manager also saves the data from user entry in a plain text file which you
   <string>symbol:plus.app</string>
   <key>label</key>
   <string>Extra Apps for %department%</string>
-  </dict>
   <key>policy</key>
   <string>install_extra_apps</string>
 </dict>
