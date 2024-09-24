@@ -1,6 +1,6 @@
 # Configuration Profile format
 
-The project includes a [custom profile plist](sample-com.jamf.setupmanager.plist) for Jamf Pro and [an example configuration profile](sample-jamfschool.mobileconfig) for Jamf School. 
+The project includes a [custom profile plist](https://github.com/Jamf-Concepts/Setup-Manager/blob/main/Examples/sample-com.jamf.setupmanager.plist) for Jamf Pro and [an example configuration profile](https://github.com/Jamf-Concepts/Setup-Manager/blob/main/Examples/sample-jamfschool.mobileconfig) for Jamf School. 
 
 ## Top-level keys
 
