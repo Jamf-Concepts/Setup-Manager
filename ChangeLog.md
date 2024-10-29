@@ -4,11 +4,11 @@
 (2024-10-23)
 ### New Features
 
-- new action [`waitForUserEntry`](ConfigurationProfile.md#waitforuserentry) which allows for two-phase installation workflows in Jamf Pro. When Setup Manager reaches this action it will wait for the user entry to save the data entry, then it will run a recon/Update Inventory. Policy actions that follow this, can then be scoped to data from the user entry. (Jamf-Concepts/Setup-Manager#11)
+- new action [`waitForUserEntry`](ConfigurationProfile.md#wait-for-user-entry) which allows for two-phase installation workflows in Jamf Pro. When Setup Manager reaches this action it will wait for the user entry to save the data entry, then it will run a recon/Update Inventory. Policy actions that follow this, can then be scoped to data from the user entry. (Jamf-Concepts/Setup-Manager#11)
 - data from user entry is now written to a file when Setup Manager submits data. See details in [User Entry](Docs/Extras.md#user-data-file) (Jamf-Concepts/Setup-Manager#9)
 - use token substitution in the `title`, `message`, and action `label` values (as well as `computerNameTemplate`)
 - token substitution can extract center characters with `:=n`
-- localization of custom text in the configuration profile has been simplified. The previous method still works, but is considered deprecated. [Details](ConfigurationProfile.md#localization)
+- localization of custom text in the configuration profile has been simplified. The previous method still works, but is considered deprecated. [Details in the documentation](ConfigurationProfile.md#localization). The [plist and profile example files](Examples) have been updated.
 
 ### Fixes and improvements
 
@@ -43,7 +43,7 @@ Even though we are confident that the 1.1 release is overall stable and ready to
 
 These features are marked for removal in a future release:
 
-- localized labels and text by adding the two-letter language code to key. Switch to [localization with dictionaries](ConfigurationProfile.md#localization). The [plist and profile example files](Examples) have been updated
+- localized labels and text by adding the two-letter language code to key. Switch to [localization with dictionaries](ConfigurationProfile.md#localization). 
 - `showBothButtons` key and functionality
 
 
