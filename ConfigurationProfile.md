@@ -1,6 +1,10 @@
 # Configuration Profile format
 
-The project includes a [custom profile plist](sample-com.jamf.setupmanager.plist) for Jamf Pro and [an example configuration profile](sample-jamfschool.mobileconfig) for Jamf School. 
+The project some sample files to get you started:
+- [sample plist](Examples/sample-com.jamf.setupmanager.plist) for Jamf Pro
+- [sample plist](Examples/sample-waitForUserEntry) for Jamf Pro with [two phase workflow](Docs/JamfPro-TwoPhase.md)
+- [configuration profile](Example/sample-jamfschool.mobileconfig) for Jamf School
+
 
 ## Top-level keys
 
@@ -8,15 +12,15 @@ The project includes a [custom profile plist](sample-com.jamf.setupmanager.plist
 
 (Boolean, default: `false`)
 
-When this is set to `true` any steps that actually change software on the disk will not be performed.
+When this is set to `true` any steps that actually change software on the disk will not be performed. This will also allow you to launch Setup Manager by double-clicking as the user. This can be useful to test a profile, or to take screen shots for documentation.
 
 These behaviors change in debug mode: 
 - checks for the existence of the Jamf binary and keychain are skipped
 - Jamf Setup manager will accept enrollmentActions from a non-managed preference file
-- `policy`, `recon`, and `shell` actions that require root are replaced with a 10 second delay (and will always complete successfully)
-- watchPath and wait actions timeout and fail after 10 seconds
+- `policy`, `recon`, and `shell` actions that require root are replaced with a delay (and will always complete successfully)
+- `watchPath` and `wait` actions timeout and fail after 10 seconds
 
-When in debug mode, you have to set the `simulateMDM` preference key to `Jamf Pro` or `Jamf School`. This allows you to do test runs on un-enrolled Macs.
+When in debug mode, you can also set the `simulateMDM` preference key to `Jamf Pro` or `Jamf School`. This allows you to do test runs on un-enrolled Macs.
 
 #### `title`
 
@@ -26,7 +30,7 @@ The main title over the window.
 
 Example:
 
-```
+```xml
 <key>title</key>
 <string>Welcome to your new Mac!</string>
 ```
@@ -45,16 +49,16 @@ The message shown below the title.
 
 Example:
 
-```
+```xml
 <key>message</key>
 <string>Please wait a few moments while we install essential software…</string>
 ```
 
-The message can use [substitutions](#substitutions).
+The message can use [substitutions](#substitution):
 
 Example:
 
-```
+```xml
 <key>message</key>
 <string>Preparing your new %model%. Please be patient.</string>
 ```
@@ -63,13 +67,26 @@ Example:
 
 (String, optional, localized)
 
-When this key is set, Setup Manager treats it as an image/[icon source](#icon-source) and displays the image in a screen covering background.
+When this key is set, Setup Manager treats it as an image/[icon source](#icon-sources) and displays the image in a screen covering background.
 
 #### `runAt`
 
-(String, optional, deafult; `enrollment`)
+(String, optional, default: `enrollment`)
 
-This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without AutoAdvance) and user-initiated enrollment. When the `runAt` value is set to `loginwindow` Setup Manager will launch when the login window is shown. This is useful for fully automated enrollments with AutoAdvance. A setting of `loginwindow` will only with enrollment setups that eventually end on the login window (i.e. a user has to be created automatically or the device is bound to a directory).
+**Beta:** We believe the run at login window feature may require more testing, especially in some edge cases. When, after thorough testing, you believe this works in your workflow, feel free to deploy it, and please let us know about success or any issues you might encounter.
+
+This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without AutoAdvance) and user-initiated enrollment.
+
+When the `runAt` value is set to `loginwindow` Setup Manager will launch only when the login window is shown. This is useful for fully automated enrollments using AutoAdvance.
+
+A setting of `loginwindow` will only work with enrollment setups that eventually end on the login window (i.e. a user has to be created automatically, the device is bound to a directory, etc).
+
+Example:
+
+```xml
+<key>runAt</key>
+<string>loginwindow</string>
+```
 
 #### `enrollmentActions`
 
@@ -87,28 +104,37 @@ When this key exists, Setup Manager will prompt for user data while the enrollme
 
 (Dict of Strings, optional)
 
-When this key exists, Setup Manager will show a "Help" button (a circled question mark) in the lower right corner while it is running. You can add subkeys with content for the help, which are described in [Help](#help). When Setup Manager has completed, the "Help" button will be replaced with the "Continue" and/or "Shutdown" button.
+When this key exists, Setup Manager will show a "Help" button (a circled question mark) in the lower right corner while it is running. You can add sub-keys with content for the help, which are described in [Help](#help). When Setup Manager has completed, the "Help" button will be replaced with the "Continue" and/or "Shutdown" button.
 
 #### `accentColor`
 
 (String, optional, default: system blue)
 
-When present sets the accent color for buttons, progress bar and other UI elements. You can use this to match branding. Color is encoded as a six digit hex code, i.e. `#FF0088`.
+Sets the accent color for buttons, progress bar, SF Symbol icons, and other UI elements. You can use this to match branding. Color is encoded as a six digit hex code, e.g. `#FF0088`.
+
+Example:
+
+```xml
+<key>accentColor</key>
+<string>#FF0088</string>
+```
 
 #### `finalCountdown`
 
 (Number/integer, optional, default: `60`)
 
-This key changes the duration (in seconds) of the "final countdown" before the app automatically quits. Set to `-1` (or any negative number) to disable automated continue.
+This key changes the duration (in seconds) of the "final countdown" before the app automatically performs the `finalAction` (continue or shut down). Set to `-1` (or any negative number) to disable automated execution.
 
 Examples:
 
-```
+```xml
 <key>finalCountdown</key>
 <integer>30</integer>
 ```
 
-```
+Disable the 
+
+```xml
 <key>finalCountdown</key>
 <integer>-1</integer>
 ```
@@ -117,11 +143,13 @@ Examples:
 
 (String, optional, default: `continue`)
 
-This key sets the action and label for the button shown when Setup Manger has completed. When this key is set to `shutdown` (no space!) it will shutdown the computer, other wise it will just quit Setup Manager ("continue"). This is also the action that is performed when the `finalCountdown` timer runs out.
+This key sets the action and label for the button shown when Setup Manger has completed. When this key is set to `shutdown` (no space!) it will shut down the computer, other wise it will just quit Setup Manager ("continue"). This is also the action that is performed when the `finalCountdown` timer runs out.
+
+When the `DEBUG` preference is set, shutdown will merely quit/continue.
 
 Example:
 
-```
+```xml
 <key>finalAction</key>
 <string>shutdown</string>
 ```
@@ -132,11 +160,11 @@ Example:
 
 This key determines whether both the 'Shutdown' and 'Continue' are shown or just the button set in the `finalAction` key.
 
-**Warning:** this key will be removed in a future version of Setup Manager
+**Warning:** this key is deprecated and will be removed in a future version of Setup Manager
 
 Example:
 
-```
+```xml
 <key>showBothButtons</key>
 <true/>
 ```
@@ -149,7 +177,7 @@ Use this value to provide an estimate for the total size of all items that will 
 
 Example:
 
-```
+```xml
 <key>totalDownloadBytes</key>
 <integer>4500000000</integer>
 ```
@@ -158,11 +186,11 @@ Example:
 
 (String, Jamf Pro only)
 
-Set this to `$JSSID` in the configuration profile and Setup Manager will be aware of its computer's id in Jamf Pro. It will be display in the 'About this Mac…' popup.
+Set this to `$JSSID` in the configuration profile and Setup Manager will be aware of its computer's id in Jamf Pro. It will be displayed in the 'About this Mac…' popup.
 
 Example:
 
-```
+```xml
 <key>jssID</key>
 <string>$JSSID</string>
 ```
@@ -175,7 +203,7 @@ Set this to `$EMAIL` in the configuration profile. This communicates the user wh
 
 Example:
 
-```
+```xml
 <key>userID</key>
 <string>$EMAIL</string>
 ```
@@ -184,13 +212,13 @@ Example:
 
 (String, Jamf Pro only, substitutions)
 
-When this key is set, Setup Manager will generate the computer name from this template and set it. When this key is present, a `computerName` dict or string in `userEntry` will be ignored.
+When this key is set, Setup Manager will generate the computer name from this template and set it automatically. When this key is present, a `computerName` dict or string in `userEntry` will be ignored.
 
-The template uses substitution tokens, which begin and end with `%` character which will be substituted with data at run time. See [Substitutions](#substitutions) for details.
+The template uses substitution tokens, which begin and end with `%` character which will be substituted with data at run time. See [Substitutions](#substitution) for details.
 
 Example:
 
-```
+```xml
 <key>computerNameTemplate</key>
 <string>Mac-%serial:=6%</string>
 ```
@@ -203,22 +231,31 @@ This will set the computer name to `Mac-DEF456` where `DEF456` are the center si
 
 When set, the "About this Mac" info window will show this value instead of the real serial number. This is useful when making screen shots or recordings for documentation or presentations where you do not want to expose real serial numbers.
 
+Note: This is for display only. [Substitutions](#substitution) will still use the real serial number.
+
+Example:
+
+```xml
+<key>overrideSerialNumber</key>
+<string>ABC1DEFABC</string>
+```
+
 #### `hideActionLabels`
 
-(Bool, default: `false`)
+(Bool, optional, default: `false`)
 
 Hides the individual labels under each action's icon.
 
 Example:
 
-```
+```xml
 <key>hideActionLabels</key>
 <true/>
 ``` 
 
 #### `hideDebugLabel`
 
-(Bool, default: `false`)
+(Bool, optional, default: `false`)
 
 When set, suppresses display of the red 'DEBUG' label in debug mode. Useful for screenshots and recordings.
 
@@ -229,6 +266,11 @@ Example:
 <true/>
 ```
 
+#### `simulateMDM`
+
+(String, optional)
+
+When debug mode is enabled, you can set the `simulateMDM` preference key to `Jamf Pro` or `Jamf School`. This allows you to do test runs on un-enrolled Macs.
 
 ## Actions
 
@@ -270,7 +312,7 @@ When this key is set to `true` Setup Manager will only run this when itself is r
 
 Example:
 
-```
+```xml
 <dict>
   <key>label</key>
   <string>Set Time Zone</string>
@@ -292,15 +334,13 @@ Example:
 
 #### `policy`
 
-(String)
-
-(Jamf Pro only)
+(String, Jamf Pro only)
 
 This will run the jamf policy or polices with the given trigger name. This is the equivalent of running `jamf policy -event <triggername>`
 
 Example:
 
-```
+```xml
 <dict>
   <key>label</key>
   <string>BBEdit</string>
@@ -333,7 +373,7 @@ The action will fail after this timeout.
 
 Example:
 
-```
+```xml
 <dict>
   <key>label</key>
   <string>Jamf Protect</string>
@@ -341,12 +381,12 @@ Example:
   <string>symbol:app.badge</string>
   <key>watchPath</key>
   <string>/Applications/JamfProtect.app</string>
-  <key>wait</key>
+  <key>timeout</key>
 	<integer>300</integer>
 </dict>
 ```
 
-Note: This is intended to check if app are installed from the Mac App Store or Jamf App Installers. In my experience, these methods are very unreliable, hence the timeout. Since you cannot anticipate the order in which these apps may be installed, it is best to put the `watchPath` actions at the end. For large installations (Xcode) you want to have a large timeout.
+Note: This is intended to check if app are installed from the Mac App Store or Jamf App Installers. In my experience, these installation methods are quite unreliable, hence the timeout. Since you cannot anticipate the order in which these apps may be installed, it is best to put the `watchPath` actions at the end. For large installations (Xcode) you want to set a large timeout.
 
 ### Wait
 
@@ -358,7 +398,7 @@ Wait for a given time. Use this to let the system catch up with previous install
 
 Example:
 
-```
+```xml
 <dict>
   <key>label</key>
   <string>Waiting…</string>
@@ -371,11 +411,11 @@ Example:
 
 #### `waitForUserEntry`
 
-(String, value is ignored)
+(String, value is ignored, Jamf Pro only)
 
-When Setup Manager reaches this action before the user entry has been completed, it will wait until the user entry is completed and the user has clicked 'Save.'
+If Setup Manager reaches this action before the user entry has been completed, it will wait until the user entry is completed and the user has clicked 'Save.'
 
-When the user entry is saved, this action will set the computer name, according to the `computerNameTemplate` or what was entered by the user and run a recon/Update Inventory which submits the user data.
+When the user entry is saved and this action is reached, it will set the computer name, according to the `computerNameTemplate` or what was entered by the user and run a recon/Update Inventory which submits the user data. It will also save the data from the user entry to the [user data file](Docs/Extras.md#user-data-file)
 
 This action allows for "two phase" installation workflows where the policies in the second phase are scoped to data from the user entry. After this action, smart groups in Jamf Pro should reflect the data entered and you can use scoping in subsequent policies to choose which policies should or should not run on this device.
 
@@ -384,7 +424,7 @@ Regardless of whether there is a `waitForUserEntry` action or not, Setup Manager
 ```xml
 <dict>
   <key>label</key>
-  <string>Wait for User Entry</string>
+  <string>Submit User Entry</string>
   <key>waitForUserEntry</key>
   <string/>
 </dict>
@@ -402,7 +442,7 @@ You should usually not need to add a recon step. By default Setup Manager will a
 
 Example:
 
-```
+```xml
 <dict>
   <key>recon</key>
   <string/>
@@ -429,7 +469,7 @@ List of additional arguments passed into Installomator.
 
 Example:
 
-```
+```xml
 <dict>
   <key>label</key>
   <string>Google Chrome</string>
@@ -443,13 +483,13 @@ Example:
 
 ## Icon Sources
 
-Icons can be defined in several ways in Setup Manager. These different approaches for the top-level `icon` and `background` key, as well as the `icon` key in an action.
+Icons (which include the top-level `icon`, the `background` and the `icon`s in individual actions) can be defined in several ways in Setup Manager.
 
 ### From the web
 
 When the icon source string starts with `http` or `https`, Setup Manager will attempt to download a file from that URL and interpret it as an image file. It will show a spinning progress view while downloading.
 
-```
+```xml
 <key>icon</key>
 <string>https://example.com/path/to/icon.png</string>
 ```
@@ -458,16 +498,20 @@ When the icon source string starts with `http` or `https`, Setup Manager will at
 
 When the icon source is an absolute file path, Setup Manager will attempt to read that file as an image file and display it.
 
-```
+```xml
 <key>icon</key>
 <string>/Library/Organization/image.png</string>
 ```
+
+You will need to install custom local image files _before_ Setup Manager runs.
+
+With Jamf Pro, you can achieve that by adding another pkg to the Prestage. Since the Prestage installs pkgs in alphabetical order, this branding pkg should be named to be alphabetically _before_ "Setup Manager."
 
 ### Application:
 
 When the icon source is an absolute file path that ends in `.app`, Setup Manager will get the icon from that app.
 
-```
+```xml
 <key>icon</key>
 <string>/System/Applications/App Store.app</string>
 ```
@@ -476,7 +520,7 @@ When the icon source is an absolute file path that ends in `.app`, Setup Manager
 
 When the icon source starts with `name:`, Setup Manager will get the icon with that name. Two names are useful: `AppIcon` gets Setup Manager's app icon and `NSComputer` will get an icon representing the current hardware.
 
-```
+```xml
 <key>icon</key>
 <string>name:AppIcon</string>
 ```
@@ -485,9 +529,9 @@ When the icon source starts with `name:`, Setup Manager will get the icon with t
 
 When the icon source starts with `symbol:`, Setup Manager will create the icon using that symbols name. You can look up symbol names using the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
 
-Note that the availability of SF Symbols will vary with the OS version and that some SF Symbols may look different in different localizations.
+Note that the availability and appearance of SF Symbols may vary with the OS version and language/region.
 
-```
+```xml
 <key>icon</key>
 <string>symbol:clock</string>
 ```
@@ -507,17 +551,17 @@ Any of the fields will only be shown when its key exists. If you were to create 
 
 ### User Data file
 
-Data from user entry is written, together with some other data to a file when Setup Manager reaches a `waitForUserEntry` action and again when it finishes. The file is stored at `/private/var/db/SetupManagerUserData.txt`. [More details.](Extras.md#user-data-file)
+Data from user entry is written, together with some other data to a file when Setup Manager reaches a `waitForUserEntry` action and again when it finishes. The file is stored at `/private/var/db/SetupManagerUserData.txt`. [More details.](Docs/Extras.md#user-data-file)
 
 #### `default`
 
 (String, localized)
 
-You provide a default value in two ways:
+Provide a default value in two ways:
 
 Example:
 
-```
+```xml
 <key>computerName</key>
 <string>Mac-12345</string>
 ```
@@ -528,7 +572,7 @@ When you want to configure other options of the field, you need to use the `dict
 
 Example:
 
-```
+```xml
 <key>computerName</key>
 <dict>
   <key>default</key>
@@ -545,7 +589,7 @@ Example:
 
 This will show the string value given as a greyed out placeholder in the empty text field.
 
-```
+```xml
 <key>assetTag</key>
 <dict>
   <key>placeholder</key>
@@ -561,7 +605,7 @@ Note: a `default` value will prevent the placeholder from appearing, unless the 
 
 This will show a popup list of preset options:
 
-```
+```xml
 <key>department</key>
 <dict>
   <key>options</key>
@@ -594,7 +638,7 @@ Detailed description of the regular expression syntax: [NSRegularExpression](htt
 
 Example:
 
-```
+```xml
 <key>userID</key>
 <dict>
   <key>placeholder</key>
@@ -608,9 +652,9 @@ Example:
 
 (String, optional, localized)
 
-The default validation message will show the regular expression the value is not matching. This is suitable for debugging but not at all user friendly. You really should provide a localized message explaining how the value can conform.
+The default validation message will show the regular expression the value is not matching. This is suitable for debugging but not at all user friendly. You really should provide a localized message explaining how the entry should conform.
 
-```
+```xml
 <key>assetTag</key>
 <dict>
   <key>placeholder</key>
@@ -643,7 +687,7 @@ For this, you need to setup the top-level `userID` to receive the `$EMAIL` varia
 
 Example:
 
-```
+```xml
 <key>userEntry</key>
 <dict>
   <key>showForUserIDs</key>
@@ -666,7 +710,7 @@ Example:
 
 ## Help
 
-When you provide a top-level `help` key with a dictionary a help button (with a circled question mark) will be shown in the lower right corner. When you click on the help button a window with information will be shown. You can set the information with the following keys in the `help` dictionary.
+When you provide a top-level `help` key with a dictionary a help button (with a circled question mark) will be shown in the lower right corner (for left-to-right localizations). When you click on the help button a window with information will be shown. You can set the information with the following keys in the `help` dictionary.
 
 #### `title`
 
@@ -680,11 +724,11 @@ When you provide a top-level `help` key with a dictionary a help button (with a 
 
 (String, optional, localized)
 
-The contents of the `url` key will be translated into a QR code and displayed next to the help message. This allows for end users to follow a link to more information on their devices while the Mac is performing installations.
+The contents of the `url` key will be translated into a QR code and displayed next to the help message. This allows for end users to follow a link to more information on another device while the Mac is performing installations.
 
 Example:
 
-```
+```xml
 <key>help</key>
 <dict>
   <key>message</key>
@@ -698,24 +742,24 @@ Example:
 
 ## Localization
 
-The app will pick up the user choice of the UI language for the interface elements. Right now it supports English, French, German, Italian, Spanish, and Dutch. The app will fall back to English for other language choices.
+The app will pick up the user choice of the UI language for the interface elements. (Table of currently available languages below) The app will fall back to English for other language choices.
 
-You can provide localizations for the texts given in the configuration profile. 
+You can provide localizations for the custom texts given in the configuration profile. 
 
-**Note:** the method for providing localized texts in the configuration profile changed in version 1.1. The previous method will continue to work for the time being. Going forward, it is _strongly_ recommended to change to the new dictionary-based solution.
+**Deprecation notice:** the method for providing localized texts in the configuration profile changed in version 1.1. The previous method (by appending the two letter language code to the key) is considered deprecated. It will continue to work for the time being but will be removed in a future release. It is _strongly_ recommended to change to the new dictionary-based solution.
 
 To provide a set of localizations for a value in the profile, change its type from `string` to `dict`. Inside the `dict`, provide a value for each localization for each localization with the language code as key.
 
 For example, this unlocalized key-value pair
 
-```
+```xml
 <key>title</key>
 <string>Welcome!</string>
 ``` 
 
-is localized like this:
+can be localized like this:
 
-```
+```xml
 <key>title</key>
 <dict>
   <key>en</key>
@@ -766,21 +810,28 @@ Use these two-letter codes for these languages:
 | French             | fr              |
 | German             | de              |
 | Italian            | it              |
+| Hebrew             | he              |
 | Norwegian          | nb              |
 | Spanish            | es              |
 | Swedish            | sv              |
 
+The [plist and profile example files](Examples) contain localizations for many of the custom text elements.
+
 ## Substitution
 
-Certain keys, such as `computerNameTemplate` can use tokens, which begin and end with `%` character. The tokens will be substituted with data from the device or from user entry. For example, in the template `Mac-%serial%` the `%serial%` token will be replaced with the computer's serial number. (A double `%%` will be substituted with a single `%`, in case you need to represent this symbol in the computer name.)
+Certain keys, such as `computerNameTemplate` can use tokens, which begin and end with `%` character. The tokens will be substituted with data from the device or user entry.
+
+For example, in the template `Mac-%serial%` the `%serial%` token will be replaced with the computer's serial number. 
+
+A double `%%` will be substituted with a single `%`, in case you need to represent this symbol.
 
 The following tokens are available:
 
 - `serial`: the computer's serial number
-- `udid`: the computer's provisioning udid
+- `udid`: the computer's provisioning universal device identifier
 - `model`: the computer's model name, e.g. `MacBook Air` or `Mac mini`
 - `model-short`: the first word of `model` (no spaces), i.e. `MacBook`, `Mac` or `iMac`
-- these values from user entry, _after_ user entry has completed 
+- these values from user entry, _after_ user entry has completed (see [`waitForUserEntry`](#waitForUserEntry))
     - `email`
     - `assetTag`
     - `building`
@@ -797,4 +848,3 @@ These keys can use substitutions:
 - `message`
 - `computerNameTemplate`
 - actions: `label`
-

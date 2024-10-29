@@ -64,8 +64,8 @@ To run Setup Manager at `Login Window` you will require
 
 In order to configure the workflow in Jamf School you will need
 
-- A Jamf Setup Manager Configuration Profile (customized for your deployment, example profile below) uploaded to Jamf School 
-- Jamf Setup Manager package installer (available from Jamf Concepts) uploaded to Jamf School
+- A Jamf Setup Manager Configuration Profile (customized for your deployment, [example profile](../Examples/sample-jamfschool.mobileconfig)) uploaded to Jamf School 
+- Jamf Setup Manager package installer (available from [Releases](https://github.com/jamf-concepts/setup-manager/releases)) uploaded to Jamf School
 - An Automated Device Enrollment Profile with the correct settings for your chosen deployment method (`default` or `LoginWindow`)
 
 	
@@ -118,13 +118,13 @@ In members select `Managed Profile (Installed)` `equals` and then select *"Jamf 
 > If you named your profile in step 1 something different, be sure to select that profile in this step
 
 - Next in the `Apps` tab add any apps or packages that will not be installed via Installomator as part of the Jamf Setup Workflow and in the `Profiles` tab any any and all config needed to manage your Macs
-- If you install packages or App Store apps through Jamf School, and you want to report on them as part of the Jamf Setup Manager workflow be sure to add `Watchpaths` for the apps / content into the Jamf `Setup Manager Configuration Profile` before uploading to Jamf School
+- If you install packages or App Store apps through Jamf School, and you want to report on them as part of the Jamf Setup Manager workflow be sure to add `watchpath`s for the apps / content into the Jamf `Setup Manager Configuration Profile` before uploading to Jamf School
 
 ---
 
 ### Workflow
 
-These chained amart group actions then perform the following flow
+These chained smart group actions then perform the following flow
 
 - Scope the Jamf Setup Manager Config profiles to all macOS devices enrolled with a given ADE profile
 - Once the Profile is reported as installed by Jamf School, it will then install the Jamf Setup Manager pkg (since we 100% know the config profile is on the device before the pkg, we know it’ll be configured in the correct manner) and the *“Jamf Setup Manager Installed”* profile 

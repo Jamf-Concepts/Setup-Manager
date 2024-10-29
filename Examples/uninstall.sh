@@ -37,7 +37,9 @@ fi
 echo "removing files"
 rm -rfv "$appPath"
 rm -v /Library/LaunchDaemons/"$bundleID".plist
+rm -v /Library/LaunchAgents/"$bundleID".loginwindow.plist
 
+echo "forgetting $bundleID pkg receipt"
 pkgutil --forget "$bundleID"
 
 # rm -v /private/var/db/.JamfSetupEnrollmentDone

@@ -22,6 +22,8 @@
 				<string>Establecer zona horaria</string>
 				<key>fr</key>
 				<string>Définir le fuseau horaire</string>
+				<key>he</key>
+				<string>הגדרות אזור זמן</string>
 				<key>it</key>
 				<string>Imposta il fuso orario</string>
 				<key>nl</key>
@@ -83,6 +85,8 @@
 		<string>Por favor espere mientras Setup Manager configura tu nuevo Mac.</string>
 		<key>fr</key>
 		<string>Veuillez être patient pendant que Setup Manager configure votre nouveau Mac.</string>
+		<key>he</key>
+		<string>אנא התאזר בסבלנות בזמן ש-Setup Manager מגדיר את ה-Mac החדש שלך</string>
 		<key>it</key>
 		<string>Sii paziente mentre Setup Manager configura il tuo nuovo Mac.</string>
 		<key>nl</key>
@@ -98,6 +102,8 @@
 		<string>¡Bienvenido!</string>
 		<key>fr</key>
 		<string>Bienvenu!</string>
+		<key>he</key>
+		<string>ברוכים הבאים!</string>
 		<key>it</key>
 		<string>Benvenuto!</string>
 		<key>nl</key>

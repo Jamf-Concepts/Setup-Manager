@@ -52,7 +52,7 @@ You can add more actions here. There are more types of actions available, you ca
 - Add the Setup Manager pkg and the configuration profile to the Prestage
 - if you have JamfConnect.pkg in the Prestage, remove it. You can later add an action to install JamfConnect using Setup Manager.
 - ensure that 'Automatically advance through Setup Assitant' is _disabled_
-- Have at least one option _disabled_ (so that _is_ displayed)
+- Have at least one Setup Assistant option _disabled_ (so that _is_ displayed)
 - ensure your test Mac(s) is (are) assigned to the Prestage
 
 ## Wipe the Test Mac
@@ -64,8 +64,7 @@ You can add more actions here. There are more types of actions available, you ca
 
 ## Next Steps
 
-- add more actions to Setup Manager, you can use more Jamf Pro policies, Installomator labels, or shell actions
-- add a computer name template key to the profile to automate computer naming
-- add a `help` section to let the user know what is going on
-- ideally automated deployments shouldn't require manual entry, but if necessary, you can configure a user entry section in the profile
-
+- add more [actions](../ConfigurationProfile.md#actions) to Setup Manager, you can use more Jamf Pro policies, Installomator labels, or shell actions
+- automate computer naming with a [computer name template key](../ConfigurationProfile.md#computerNameTemplate)
+- add [a `help` section](../ConfigurationProfile.md#help) to let the user know what is going on
+- ideally automated deployments shouldn't require manual entry, but if necessary, you can configure a [user entry](../ConfigurationProfile.md#user-entry) section in the profile

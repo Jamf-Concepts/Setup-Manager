@@ -1,5 +1,52 @@
 #  Setup Manager - Change Log
 
+## v1.1
+(2024-10-23)
+### New Features
+
+- new action [`waitForUserEntry`](ConfigurationProfile.md#waitforuserentry) which allows for two-phase installation workflows in Jamf Pro. When Setup Manager reaches this action it will wait for the user entry to save the data entry, then it will run a recon/Update Inventory. Policy actions that follow this, can then be scoped to data from the user entry. (Jamf-Concepts/Setup-Manager#11)
+- data from user entry is now written to a file when Setup Manager submits data. See details in [User Entry](Docs/Extras.md#user-data-file) (Jamf-Concepts/Setup-Manager#9)
+- use token substitution in the `title`, `message`, and action `label` values (as well as `computerNameTemplate`)
+- token substitution can extract center characters with `:=n`
+- localization of custom text in the configuration profile has been simplified. The previous method still works, but is considered deprecated. [Details](ConfigurationProfile.md#localization)
+
+### Fixes and improvements
+
+1.1beta:
+
+- icons using `symbol:` that end in `.app` now work properly
+- Elapsed time is shown in "About this Mac…" Start time is shown with option key.
+- svg and pdf images used for `icon`s should now work
+- general fixes in user entry setup
+- improved rendering in Help View (Jamf-Concepts/Setup-Manager#12)
+- fixes to json schema
+- improved and updated documentation
+- included Installomator script updated to [v10.6](https://github.com/Installomator/Installomator/releases/v10.6)
+- added Setup Manager version and macOS version and build to tracking ping
+- fixed UI glitch in macOS Sequoia
+
+1.1 release:
+
+- documentation updates and fixes (Jamf-Concepts/Setup-Manager#35, Jamf-Concepts/Setup-Manager#44, Jamf-Concepts/Setup-Manager#48, Jamf-Concepts/Setup-Manager#51)
+- custom `accentColor` now works correctly with SF Symbol icons (Jamf-Concepts/Setup-Manager#41)
+- setting a `placeholder` no longer overrides a `default` in `userEntry` (Jamf-Concepts/Setup-Manager#43)
+- more UI updates
+- Hebrew localization
+
+### Beta features
+
+Even though we are confident that the 1.1 release is overall stable and ready to be used in production, we believe this feature may require more testing. When, after thorough testing in your environment, you conclude this works for your workflow, please let us know about success or any issues you might encounter.
+
+- Setup Manager can now run over Login Window, instead of immediately after installation. This also allows Setup Manager to work with AutoAdvance. Use [the new `runAt` key](ConfigurationProfile.md#runAt) in the profile to determine when Setup Manager runs (Jamf-Concepts/Setup-Manager#18)
+
+### Deprecations
+
+These features are marked for removal in a future release:
+
+- localized labels and text by adding the two-letter language code to key. Switch to [localization with dictionaries](ConfigurationProfile.md#localization). The [plist and profile example files](Examples) have been updated
+- `showBothButtons` key and functionality
+
+
 ## v1.1beta
 (2024-09-09)
 
