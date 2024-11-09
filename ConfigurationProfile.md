@@ -12,7 +12,7 @@ The project some sample files to get you started:
 
 (Boolean, default: `false`)
 
-When this is set to `true` any steps that actually change software on the disk will not be performed. This will also allow you to launch Setup Manager by double-clicking as the user. This can be useful to test a profile, or to take screen shots for documentation.
+When this is set to `true` any steps that actually change software on the disk will not be performed. This will also allow you to launch Setup Manager by double-clicking as the user. This can be useful to test a profile, or to take screenshots for documentation.
 
 These behaviors change in debug mode: 
 - checks for the existence of the Jamf binary and keychain are skipped
@@ -229,7 +229,7 @@ This will set the computer name to `Mac-DEF456` where `DEF456` are the center si
 
 (String, optional)
 
-When set, the "About this Mac" info window will show this value instead of the real serial number. This is useful when making screen shots or recordings for documentation or presentations where you do not want to expose real serial numbers.
+When set, the "About this Mac…" info window will show this value instead of the real serial number. This is useful when making screenshots or recordings for documentation or presentations where you do not want to expose real serial numbers.
 
 Note: This is for display only. [Substitutions](#substitution) will still use the real serial number.
 
