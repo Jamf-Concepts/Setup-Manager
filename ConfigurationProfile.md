@@ -75,9 +75,9 @@ When this key is set, Setup Manager treats it as an image/[icon source](#icon-so
 
 **Beta:** We believe the run at login window feature may require more testing, especially in some edge cases. When, after thorough testing, you believe this works in your workflow, feel free to deploy it, and please let us know about success or any issues you might encounter.
 
-This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without AutoAdvance) and user-initiated enrollment.
+This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without Auto Advance) and user-initiated enrollment.
 
-When the `runAt` value is set to `loginwindow` Setup Manager will launch only when the login window is shown. This is useful for fully automated enrollments using AutoAdvance.
+When the `runAt` value is set to `loginwindow` Setup Manager will launch only when the login window is shown. This is useful for fully automated enrollments using Auto Advance.
 
 A setting of `loginwindow` will only work with enrollment setups that eventually end on the login window (i.e. a user has to be created automatically, the device is bound to a directory, etc).
 
