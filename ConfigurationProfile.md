@@ -16,7 +16,7 @@ When this is set to `true` any steps that actually change software on the disk w
 
 These behaviors change in debug mode: 
 - checks for the existence of the Jamf binary and keychain are skipped
-- Jamf Setup manager will accept enrollmentActions from a non-managed preference file
+- Jamf Setup Manager will accept enrollmentActions from a non-managed preference file
 - `policy`, `recon`, and `shell` actions that require root are replaced with a delay (and will always complete successfully)
 - `watchPath` and `wait` actions timeout and fail after 10 seconds
 - The user entry data file is output to /Users/Shared
@@ -55,7 +55,7 @@ Example:
 <string>Please wait a few moments while we install essential software…</string>
 ```
 
-The message can use [substitutions](#substitution):
+The message can use [substitutions](#substitution).
 
 Example:
 
@@ -74,7 +74,7 @@ When this key is set, Setup Manager treats it as an image/[icon source](#icon-so
 
 (String, optional, default: `enrollment`)
 
-**Beta:** We believe the run at login window feature may require more testing, especially in some edge cases. When, after thorough testing, you believe this works in your workflow, feel free to deploy it, and please let us know about success or any issues you might encounter.
+**Beta:** We believe the run at login window feature may require more testing, especially in some edge cases. When, after thorough testing, you believe this works in your workflow, feel free to deploy it, and please let us know about your success or any issues you might encounter.
 
 This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without Auto Advance) and user-initiated enrollment.
 
@@ -126,14 +126,14 @@ Example:
 
 This key changes the duration (in seconds) of the "final countdown" before the app automatically performs the `finalAction` (continue or shut down). Set to `-1` (or any negative number) to disable automated execution.
 
-Examples:
+Example:
 
 ```xml
 <key>finalCountdown</key>
 <integer>30</integer>
 ```
 
-Disable the 
+Disable the countdown:
 
 ```xml
 <key>finalCountdown</key>
@@ -144,7 +144,7 @@ Disable the
 
 (String, optional, default: `continue`)
 
-This key sets the action and label for the button shown when Setup Manger has completed. When this key is set to `shutdown` (no space!) it will shut down the computer, other wise it will just quit Setup Manager ("continue"). This is also the action that is performed when the `finalCountdown` timer runs out.
+This key sets the action and label for the button shown when Setup Manger has completed. When this key is set to `shutdown` (no space!) it will shut down the computer, otherwise it will just quit Setup Manager ("continue"). This is also the action that is performed when the `finalCountdown` timer runs out.
 
 When the `DEBUG` preference is set, shutdown will merely quit/continue.
 
@@ -161,7 +161,7 @@ Example:
 
 This key determines whether both the 'Shutdown' and 'Continue' are shown or just the button set in the `finalAction` key.
 
-**Warning:** this key is deprecated and will be removed in a future version of Setup Manager
+**Warning:** this key is deprecated and will be removed in a future version of Setup Manager.
 
 Example:
 
@@ -174,7 +174,7 @@ Example:
 
 (Integer, opitonal, default: 1000000000 or 1GB, v0.8)
 
-Use this value to provide an estimate for the total size of all items that will be downloaded. Setup Manager will display and estimated download time for this sum in the "About this Mac..." popup window.
+Use this value to provide an estimate for the total size of all items that will be downloaded. Setup Manager will display and estimated download time for this sum in the "About this Mac…" popup window.
 
 Example:
 
@@ -187,7 +187,7 @@ Example:
 
 (String, Jamf Pro only)
 
-Set this to `$JSSID` in the configuration profile and Setup Manager will be aware of its computer's id in Jamf Pro. It will be displayed in the 'About this Mac…' popup.
+Set this to `$JSSID` in the configuration profile and Setup Manager will be aware of its computer's ID in Jamf Pro. It will be displayed in the 'About this Mac…' popup when clicked with the option key.
 
 Example:
 
@@ -287,7 +287,7 @@ The label is used as the name of the action in display.
 
 (String, optional, localized)
 
-The icon source string used for the display of the label. Different types of actions will have different default icons, which is used when no `icon` key is present.
+The [icon source](#icon-sources) used for the display of the label. Different types of actions will have different default icons, which are used when no `icon` key is present.
 
 There are several different types of actions, and these are defined by additional keys. These keys will be on the same level as the keys above.
 
@@ -309,7 +309,7 @@ When the command given in `shell` requires arguments they are listed here, one i
 
 (Bool, default: `false`, optional)
 
-When this key is set to `true` Setup Manager will only run this when itself is running as root. Otherwise it will fail the action. When `DEBUG` is enabled, it will replace the action with a delay instead.
+When this key is set to `true`, Setup Manager will only run this when itself is running as root. Otherwise, it will fail the action. When `DEBUG` is enabled, it will replace the action with a delay instead.
 
 Example:
 
@@ -337,7 +337,7 @@ Example:
 
 (String, Jamf Pro only)
 
-This will run the jamf policy or polices with the given trigger name. This is the equivalent of running `jamf policy -event <triggername>`
+This will run the Jamf Pro policy or polices with the given trigger name. This is the equivalent of running `jamf policy -event <triggername> -forceNoRecon`.
 
 Example:
 
@@ -387,7 +387,7 @@ Example:
 </dict>
 ```
 
-Note: This is intended to check if app are installed from the Mac App Store or Jamf App Installers. In my experience, these installation methods are quite unreliable, hence the timeout. Since you cannot anticipate the order in which these apps may be installed, it is best to put the `watchPath` actions at the end. For large installations (Xcode) you want to set a large timeout.
+Note: This is intended to check if an app has been installed from the Mac App Store or by Jamf App Installers. In my experience, these installation methods are quite unreliable, hence the timeout. Since you cannot anticipate the order in which these apps may be installed, it is best to put the `watchPath` actions at the end. For large installations, such as Xcode, Apple's pro apps, or Adobe Creative Cloud, you want to set a large timeout.
 
 ### Wait
 
@@ -416,7 +416,7 @@ Example:
 
 If Setup Manager reaches this action before the user entry has been completed, it will wait until the user entry is completed and the user has clicked 'Save.'
 
-When the user entry is saved and this action is reached, it will set the computer name, according to the `computerNameTemplate` or what was entered by the user and run a recon/Update Inventory which submits the user data. It will also save the data from the user entry to the [user data file](Docs/Extras.md#user-data-file)
+When the user entry is saved and this action is reached, it will set the computer name, according to the `computerNameTemplate` or what was entered by the user and run a recon/Update Inventory which submits the user data. It will also save the data from the user entry to the [user data file](Docs/Extras.md#user-data-file).
 
 This action allows for "two phase" installation workflows where the policies in the second phase are scoped to data from the user entry. After this action, smart groups in Jamf Pro should reflect the data entered and you can use scoping in subsequent policies to choose which policies should or should not run on this device.
 
@@ -439,7 +439,7 @@ Regardless of whether there is a `waitForUserEntry` action or not, Setup Manager
 
 This will run a Jamf Inventory update.
 
-You should usually not need to add a recon step. By default Setup Manager will automatically run an inventory update before and after running the enrollment actions.
+You should usually not need to add a recon step. By default, Setup Manager will automatically run an inventory update before and after running the enrollment actions.
 
 Example:
 
@@ -460,7 +460,7 @@ Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to sup
 
 (String)
 
-The installomator label to run.
+The Installomator label to run.
 
 #### `arguments`
 
@@ -528,7 +528,7 @@ When the icon source starts with `name:`, Setup Manager will get the icon with t
 
 ### SF Symbols:
 
-When the icon source starts with `symbol:`, Setup Manager will create the icon using that symbols name. You can look up symbol names using the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
+When the icon source starts with `symbol:`, Setup Manager will create the icon using that symbol's name. You can look up symbol names using the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
 
 Note that the availability and appearance of SF Symbols may vary with the OS version and language/region.
 
@@ -558,7 +558,7 @@ Data from user entry is written, together with some other data to a file when Se
 
 (String, localized)
 
-Provide a default value in two ways:
+Provide a default value in one of two ways:
 
 Example:
 
@@ -678,9 +678,9 @@ The default validation message will show the regular expression the value is not
 
 ### Conditionally show the user entry for certain users
 
-You can configure Setup Manager to only show the user entry section when specified users have authentication in enrollment customization. This enables workflows, where certain users (techs and admins) gets the option to re-assign the device to another user, but other users don't see the option.
+You can configure Setup Manager to only show the user entry section when specified users have authenticated in enrollment customization. This enables workflows, where certain users (techs and admins) get the option to re-assign the device to another user, but other users don't see the option.
 
-For this, you need to setup the top-level `userID` to receive the `$EMAIL` variable. This will communicate the user who logged in with customized enrollment back into  Setup Manager. Then you add key `showForUserIDs` with an array of user emails to the `userEntry` dict. When both `userID` and `userEntry.showForUserIDs` are set, the user entry UI will only show for the listed users.
+For this, you need to setup the top-level `userID` to receive the `$EMAIL` variable. This will communicate to Setup Manager the user who logged in at customized enrollment. Then you add key `showForUserIDs` with an array of user emails to the `userEntry` dict. When both `userID` and `userEntry.showForUserIDs` are set, the user entry UI will only show for the listed users.
 
 #### `showForUserIDs`
 
@@ -743,7 +743,7 @@ Example:
 
 ## Localization
 
-The app will pick up the user choice of the UI language for the interface elements. (Table of currently available languages below) The app will fall back to English for other language choices.
+The app will pick up the user choice of the UI language for the interface elements. (Table of currently available languages below.) The app will fall back to English for other language choices.
 
 You can provide localizations for the custom texts given in the configuration profile. 
 
