@@ -2,8 +2,8 @@
 
 The project some sample files to get you started:
 - [sample plist](Examples/sample-com.jamf.setupmanager.plist) for Jamf Pro
-- [sample plist](Examples/sample-waitForUserEntry) for Jamf Pro with [two phase workflow](Docs/JamfPro-TwoPhase.md)
-- [configuration profile](Example/sample-jamfschool.mobileconfig) for Jamf School
+- [sample plist](Examples/sample-waitForUserEntry.plist) for Jamf Pro with [two phase workflow](Docs/JamfPro-TwoPhase.md)
+- [configuration profile](Examples/sample-jamfschool.mobileconfig) for Jamf School
 
 
 ## Top-level keys
