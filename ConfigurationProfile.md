@@ -19,6 +19,7 @@ These behaviors change in debug mode:
 - Jamf Setup manager will accept enrollmentActions from a non-managed preference file
 - `policy`, `recon`, and `shell` actions that require root are replaced with a delay (and will always complete successfully)
 - `watchPath` and `wait` actions timeout and fail after 10 seconds
+- The user entry data file is output to /Users/Shared
 
 When in debug mode, you can also set the `simulateMDM` preference key to `Jamf Pro` or `Jamf School`. This allows you to do test runs on un-enrolled Macs.
 
