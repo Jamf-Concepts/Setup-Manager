@@ -33,7 +33,7 @@ You may also need to remember to remove the [flag file](#flag-file) before launc
 
 You will also be able launch the app as the user, by double-clicking the app in `/Applications/Utilities`. This is useful to test the look and feel of your custom icons, text and localization. When you use this to create screenshots for documentation, also note the `overrideSerialNumber` and `hideDebugLabel` keys.
 
-For testing, you can also re-launch Setup Manager from the command line as root with `sudo "/Applications/Utilities/Setup Manager/Contents/Resources/Setup Manager"`
+For testing, you can also re-launch Setup Manager from the command line as root with `sudo "/Applications/Utilities/Setup Manager.app/Contents/Resources/Setup Manager"`
 
 ## Flag file
 
