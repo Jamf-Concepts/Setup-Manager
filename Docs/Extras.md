@@ -19,7 +19,7 @@ Note that the custom schema can become confused when you switch between enrollme
 
 ## Quit
 
-The command-Q keyboard short cut to quit the app is disabled. Use `shift-control-command-E` instead. This should only be used when debugging and trouble-shooting, as it will leave the client in an undetermined state when installations are aborted.
+The command-Q keyboard shortcut to quit the app is disabled. Use `shift-control-command-E` instead. This should only be used when debugging and troubleshooting, as it will leave the client in an undetermined state when installations are aborted.
 
 ## Logging
 
