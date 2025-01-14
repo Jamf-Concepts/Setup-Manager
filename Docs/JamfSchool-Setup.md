@@ -1,5 +1,4 @@
 # Jamf School: Setup Manager Quick Start
----
 
 ### Upload Setup Manager Package
 
