@@ -1,5 +1,10 @@
 #  Setup Manager - Change Log
 
+## v1.1.1
+(2025-01-28)
+
+- updated included Installomator script to [v10.7](https://github.com/Installomator/Installomator/releases/tag/v10.7)
+
 ## v1.1
 (2024-10-23)
 ### New Features

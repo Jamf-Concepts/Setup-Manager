@@ -19,7 +19,7 @@ Note that the custom schema can become confused when you switch between enrollme
 
 ## Quit
 
-The command-Q keyboard shortcut to quit the app is disabled. Use `shift-control-command-E` instead. This should only be used when debugging and troubleshooting, as it will leave the client in an undetermined state when installations are aborted.
+The command-Q keyboard short cut to quit the app is disabled. Use `shift-control-command-E` instead. This should only be used when debugging and trouble-shooting, as it will leave the client in an undetermined state when installations are aborted.
 
 ## Logging
 
@@ -33,7 +33,8 @@ You may also need to remember to remove the [flag file](#flag-file) before launc
 
 You will also be able launch the app as the user, by double-clicking the app in `/Applications/Utilities`. This is useful to test the look and feel of your custom icons, text and localization. When you use this to create screen shots for documentation, also note the `overrideSerialNumber` and `hideDebugLabel` keys.
 
-For testing, you can also re-launch Setup Manager from the command line as root with `sudo "/Applications/Utilities/Setup Manager/Contents/MacOS/Setup Manager"`
+
+For testing, you can also re-launch Setup Manager from the command line as root with `sudo "/Applications/Utilities/Setup Manager.app/Contents/MacOS/Setup Manager"`
 
 ## Flag file
 
