@@ -1,8 +1,8 @@
 #  Frequently Asked Questions
 
-## Is there are custom JSON Schema for Jamf Pro?
+## Is there a custom JSON Schema for Jamf Pro?
 
-[Yes.](Extras.md#custom-json-schema-for-jamf-pro)
+[Yes.](Extras.md)
 
 ## Can you block the user desktop with user initiated enrollment?
 
@@ -14,7 +14,7 @@ There can be many causes for this. A few common causes are:
  
 - Jamf Pro: check that Setup Manager is added to your prestage and the package does not have the label "Availability pending" in Settings> Packages
 - Jamf Pro: do not install JamfConnect.pkg in prestage when you want to use Setup Manager. Install JamfConnect with Setup Manager instead
-- you need at least one of the 'Setup Assistant Options' in the prestage to be set to _not_ skip. Location Services or 'Choose your Look' are common choices, that you generally want to leave up the user anyway. Otherwise Setup Assistant may quit before Setup Manager can launch and do its actions.
+- you need at least one of the 'Setup Assistant Options' in the prestage to be set to _not_ skip. Location Services or 'Choose your Look' are common choices that you generally want to leave up the user anyway. Otherwise, Setup Assistant may quit before Setup Manager can launch and do its actions.
 
 ## Does Setup Manager require Jamf Connect
 
@@ -27,16 +27,16 @@ Setup Manager will run fine without Jamf Connect. You can even build 'single-tou
 - preinstall icon files with a custom package installer in prestage. Set the priority of the media/branding package lower than that for Setup Manager, or give the branding/media package a name that is alphabetically earlier than Setup Manager, so it installs before Setup Manager
 - use http(s) urls to the image files
     - you can host them on a web server/service that you have control over
-    - you can add the icon as an icon for a self service policy in Jamf and then copy the url to the icon once uploaded
+    - you can add the icon as an icon for a Self Service policy in Jamf and then copy the url to the icon once uploaded
 
 
 ## What is happening during "Getting Ready" and "Finishing"?
 
 During the "Getting Ready" phase, Setup Manager is waiting for the enrollment configuration to be complete. The steps taken during these phases depend on the version of Setup Manager and the management system.
 
-When enrolled into Jamf Pro, Setup Manager runs (among other things) a recon/Update Inventory during "Getting Ready" and "Finshing." This will make up most of the time in these phases.
+When enrolled into Jamf Pro, Setup Manager runs (among other things) a recon/Update Inventory during "Getting Ready" and "Finishing." This will make up most of the time in these phases.
 
-You can open the log window (command-L) or review the [log file](Extras.md#logging) for detail for each step. Should Setup Manager stall during one of these steps, you can [quit](#quit) out of Setup Manager and review the [log file](Extras.md#logging) after completing the setup.
+You can open the log window (command-L) or review the [log file](Extras.md#logging) for detail for each step. Should Setup Manager stall during one of these steps, you can [quit](Extras.md#quit) out of Setup Manager and review the [log file](Extras.md#logging) after completing the setup.
 
 ## Can I set the wallpaper/desktop picture or dock with Setup Manager?
 

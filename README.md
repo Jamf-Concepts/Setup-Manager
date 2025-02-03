@@ -20,7 +20,7 @@ There is also a [`#jamf-setup-manager`](https://macadmins.slack.com/archives/C07
 
 There are many enrollment progress tools available for Mac admins, each with their own strengths. Jamf Setup Manager approaches the problem from the perspective of an IT service provider.
 
-Setup Manager offers many of the same features of these utilities but is especially useful for the case where an IT department or provisioning depot wants to ensure that a new Mac is properly configured and assigned before sending the device to its new user. It runs over Setup Assistant before a user is created so it won't interfere with MDM-capable user or the secure token flow for FileVault. You can control which policies and installations Setup Manager runs with a configuration profile.
+Setup Manager offers many of the same features of these utilities but is especially useful for the case where an IT department or provisioning depot wants to ensure that a new Mac is properly configured and assigned before sending the device to its new user. It runs over Setup Assistant before a user is created, so it won't interfere with MDM-capable user or the secure token flow for FileVault. You can control which policies and installations Setup Manager runs with a configuration profile.
 
 Setup Manager provides:
 
@@ -51,7 +51,7 @@ Setup Manager provides:
 
 The structure of the configuration profile [is documented here](ConfigurationProfile.md).
 
-There is also a [custom schema for Jamf Pro](Docs/Extras#custom-json-schema-for-jamf-pro).
+There is also a [custom schema for Jamf Pro](Docs/Extras).
 
 ## Requirements
 
@@ -64,7 +64,7 @@ Setup Manager requires macOS 12.0.0 or higher. It will work only with Jamf Pro o
 - When you install **_Jamf Connect_** during the Prestage together with Setup Manager, you may see Setup Assistant for some time before Setup Manager launches or Setup Manager may not launch at all. Remove Jamf Connect from the Prestage and install it with Setup Manager policy or installomator action.
 - Policies that are triggered by `enrollmentComplete` may disrupt Setup Manager running from Prestage/Automated Device Enrollment. Disable or unscope policies triggered by `enrollmentComplete` on devices using Setup Manager.
 - In some deployments, Setup Manager attempts to start while Jamf Pro is still installing. Try adding a 30-60 second `wait` action as the first action.
-- With Jamf School, there will a few seconds after the remote management dialog where Setup Assistant shows before Setup Manager launches. With the Jamf School enrollment architecture, this is unavoidable.
+- With Jamf School, there will be a few seconds after the remote management dialog where Setup Assistant shows before Setup Manager launches. With the Jamf School enrollment architecture, this is unavoidable.
 
 ---
 
