@@ -2,7 +2,7 @@
 
 ## Is there a custom JSON Schema for Jamf Pro?
 
-[Yes.](Extras.md)
+[Yes.](Extras.md#custom-json-schema-for-jamf-pro)
 
 ## Can you block the user desktop with user initiated enrollment?
 

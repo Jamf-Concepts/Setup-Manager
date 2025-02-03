@@ -51,7 +51,7 @@ Setup Manager provides:
 
 The structure of the configuration profile [is documented here](ConfigurationProfile.md).
 
-There is also a [custom schema for Jamf Pro](Docs/Extras).
+There is also a [custom schema for Jamf Pro](Docs/Extras.md#custom-json-schema-for-jamf-pro).
 
 ## Requirements
 
